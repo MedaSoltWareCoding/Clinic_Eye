@@ -94,7 +94,7 @@
                 </Button.Template>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                     <TextBlock Text="المرضى" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                    <Image Source="/patient.png" Width="40" Height="30"/>
+                    <Image Source="images/patient.png" Width="40" Height="30"/>
                 </StackPanel>
 
             </Button>
@@ -109,7 +109,7 @@
                 </Button.Template>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBlock Text="المواعيد" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                    <Image Source="/appointment.png" Width="40" Height="30"/>
+                    <Image Source="images/appointment.png" Width="40" Height="30"/>
 
                 </StackPanel>
             </Button>
@@ -123,7 +123,7 @@
                 </Button.Template>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBlock Text="الأطباء" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                    <Image Source="/doctor.png" Width="40" Height="30"/>
+                    <Image Source="images/doctor.png" Width="40" Height="30"/>
                 </StackPanel>
             </Button>
             <Button Height="35" Margin="10" Background="#0078D7" Foreground="White" FontSize="16" Tag="التقارير" Click="OpenTab" Width="150">
@@ -136,7 +136,7 @@
                 </Button.Template>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBlock Text="التقارير" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                    <Image Source="/application.png" Width="40" Height="30"/>
+                    <Image Source="images/application.png" Width="40" Height="30"/>
                 </StackPanel>
             </Button>
             <Button Height="35" Margin="10" Background="#0078D7" Foreground="White" FontSize="16" Tag="الفواتير" Click="OpenTab" Width="150">
@@ -149,7 +149,7 @@
                 </Button.Template>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBlock Text="الفواتير" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                    <Image Source="/bill.png" Width="40" Height="30"/>
+                    <Image Source="images/bill.png" Width="40" Height="30"/>
                 </StackPanel>
             </Button>
             <Button Height="35" Margin="10" Background="#0078D7" Foreground="White" FontSize="16" Tag="الفحوصات" Click="OpenTab" Width="150">
@@ -162,7 +162,7 @@
                 </Button.Template>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBlock Text="الفحوصات" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                    <Image Source="/examination.png" Width="40" Height="30"/>
+                    <Image Source="images/examination.png" Width="40" Height="30"/>
                 </StackPanel>
             </Button>
             <Button Height="35" Margin="10" Background="#0078D7" Foreground="White" FontSize="16" Tag="الأدوية" Click="OpenTab" Width="150">
@@ -175,7 +175,7 @@
                 </Button.Template>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBlock Text="الأدوية" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                    <Image Source="/medicine.png" Width="40" Height="30"/>
+                    <Image Source="images/medicine.png" Width="40" Height="30"/>
                 </StackPanel>
             </Button>
             <Button Height="35" Margin="10" Background="#0078D7" Foreground="White" FontSize="16" Tag="النظارات" Click="OpenTab" Width="147">
@@ -188,7 +188,7 @@
                 </Button.Template>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBlock Text="النظارات" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                    <Image Source="/sunglasses.png" Width="40" Height="30"/>
+                    <Image Source="images/sunglasses.png" Width="40" Height="30"/>
                 </StackPanel>
             </Button>
             <Button Height="35" Margin="10" Background="#0078D7" Foreground="White" FontSize="16" Tag="التكاليف" Click="OpenTab" Width="150">
@@ -202,7 +202,7 @@
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBlock Text="التكاليف" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                    <Image Source="/budget.png" Width="40" Height="30"/>
+                    <Image Source="images/budget.png" Width="40" Height="30"/>
                 </StackPanel>
             </Button>
 

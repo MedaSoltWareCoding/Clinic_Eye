@@ -28,15 +28,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="application.png" />
-    <Resource Include="appointment.png" />
-    <Resource Include="bill.png" />
-    <Resource Include="budget.png" />
-    <Resource Include="doctor.png" />
-    <Resource Include="examination.png" />
-    <Resource Include="medicine.png" />
-    <Resource Include="patient.png" />
-    <Resource Include="sunglasses.png" />
+    <Resource Include="images\application.png" />
+    <Resource Include="images\appointment.png" />
+    <Resource Include="images\bill.png" />
+    <Resource Include="images\budget.png" />
+    <Resource Include="images\doctor.png" />
+    <Resource Include="images\examination.png" />
+    <Resource Include="images\medicine.png" />
+    <Resource Include="images\patient.png" />
+    <Resource Include="images\sunglasses.png" />
   </ItemGroup>
 
 </Project>
