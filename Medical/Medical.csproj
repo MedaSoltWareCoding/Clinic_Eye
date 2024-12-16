@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="application.png" />
+    <None Remove="appointment.png" />
+    <None Remove="bill.png" />
+    <None Remove="budget.png" />
+    <None Remove="doctor.png" />
+    <None Remove="examination.png" />
+    <None Remove="medicine.png" />
+    <None Remove="patient.png" />
+    <None Remove="sunglasses.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignColors" Version="3.1.0" />
+    <PackageReference Include="MaterialDesignInXamlToolkitAddOns" Version="0.0.6" />
+    <PackageReference Include="MaterialDesignThemes" Version="5.1.0" />
+    <PackageReference Include="MySql.Data" Version="9.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="application.png" />
+    <Resource Include="appointment.png" />
+    <Resource Include="bill.png" />
+    <Resource Include="budget.png" />
+    <Resource Include="doctor.png" />
+    <Resource Include="examination.png" />
+    <Resource Include="medicine.png" />
+    <Resource Include="patient.png" />
+    <Resource Include="sunglasses.png" />
+  </ItemGroup>
+
+</Project>

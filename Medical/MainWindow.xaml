@@ -1,0 +1,400 @@
+﻿<Window x:Class="Medical.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Medical"
+        mc:Ignorable="d"
+        Title="MainWindow" Width="885" Height="678"
+        WindowStartupLocation="CenterScreen"
+       
+        MinWidth="800"
+        MinHeight="600" Margin="0,0,0,7">
+    <Window.Resources>
+
+        <!-- Style for Rounded TextBox -->
+        <Style x:Key="RoundedTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            CornerRadius="5" Padding="5">
+                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="#f9f9f9"/>
+            <Setter Property="Foreground" Value="#333"/>
+            <Setter Property="BorderBrush" Value="#dcdcdc"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <!-- Style for Rounded Button -->
+        <Style x:Key="RoundedButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                            CornerRadius="5"
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            Effect="{DynamicResource ShadowEffect}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="#0078D7"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <!-- Shadow Effect -->
+        <DropShadowEffect x:Key="ShadowEffect" BlurRadius="10" ShadowDepth="3" Color="#888"/>
+    </Window.Resources>
+
+
+
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="35*"/>
+            <ColumnDefinition Width="354*"/>
+            <ColumnDefinition Width="1080*"/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar Navigation -->
+        <StackPanel Background="#2D2D30" Grid.Column="3" Grid.ColumnSpan="2" RenderTransformOrigin="0.5,0.5">
+            <StackPanel.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.359"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </StackPanel.RenderTransform>
+            <TextBlock Text="عيادة العيون" FontSize="24" FontWeight="Bold" Foreground="White" Margin="10" TextAlignment="Center"/>
+
+            <Button Height="35" Margin="10" Background="#0078D7" Foreground="White" FontSize="16" Tag="المرضى" Click="OpenTab" Width="150"  >
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="#0078D7" BorderThickness="1" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <TextBlock Text="المرضى" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                    <Image Source="/patient.png" Width="40" Height="30"/>
+                </StackPanel>
+
+            </Button>
+
+            <Button Height="35" Margin="10" Background="#0078D7" Foreground="White" FontSize="16"  Tag="المواعيد" Click="OpenTab" Width="150" >
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="#0078D7" BorderThickness="1" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock Text="المواعيد" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                    <Image Source="/appointment.png" Width="40" Height="30"/>
+
+                </StackPanel>
+            </Button>
+            <Button Height="35" Margin="10" Background="#0078D7" Foreground="White" FontSize="16" Tag="الأطباء" Click="OpenTab" Width="150">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="#0078D7" BorderThickness="1" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock Text="الأطباء" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                    <Image Source="/doctor.png" Width="40" Height="30"/>
+                </StackPanel>
+            </Button>
+            <Button Height="35" Margin="10" Background="#0078D7" Foreground="White" FontSize="16" Tag="التقارير" Click="OpenTab" Width="150">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="#0078D7" BorderThickness="1" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock Text="التقارير" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                    <Image Source="/application.png" Width="40" Height="30"/>
+                </StackPanel>
+            </Button>
+            <Button Height="35" Margin="10" Background="#0078D7" Foreground="White" FontSize="16" Tag="الفواتير" Click="OpenTab" Width="150">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="#0078D7" BorderThickness="1" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock Text="الفواتير" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                    <Image Source="/bill.png" Width="40" Height="30"/>
+                </StackPanel>
+            </Button>
+            <Button Height="35" Margin="10" Background="#0078D7" Foreground="White" FontSize="16" Tag="الفحوصات" Click="OpenTab" Width="150">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="#0078D7" BorderThickness="1" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock Text="الفحوصات" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                    <Image Source="/examination.png" Width="40" Height="30"/>
+                </StackPanel>
+            </Button>
+            <Button Height="35" Margin="10" Background="#0078D7" Foreground="White" FontSize="16" Tag="الأدوية" Click="OpenTab" Width="150">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="#0078D7" BorderThickness="1" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock Text="الأدوية" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                    <Image Source="/medicine.png" Width="40" Height="30"/>
+                </StackPanel>
+            </Button>
+            <Button Height="35" Margin="10" Background="#0078D7" Foreground="White" FontSize="16" Tag="النظارات" Click="OpenTab" Width="147">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="#0078D7" BorderThickness="1" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock Text="النظارات" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                    <Image Source="/sunglasses.png" Width="40" Height="30"/>
+                </StackPanel>
+            </Button>
+            <Button Height="35" Margin="10" Background="#0078D7" Foreground="White" FontSize="16" Tag="التكاليف" Click="OpenTab" Width="150">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="#0078D7" BorderThickness="1" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock Text="التكاليف" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                    <Image Source="/budget.png" Width="40" Height="30"/>
+                </StackPanel>
+            </Button>
+
+
+        </StackPanel>
+
+
+
+        <!-- Main Content Area -->
+        <Grid Grid.Column="0" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="65*"/>
+                <ColumnDefinition Width="39*"/>
+                <ColumnDefinition Width="59*"/>
+                <ColumnDefinition Width="55*"/>
+                <ColumnDefinition Width="52*"/>
+                <ColumnDefinition Width="1192*"/>
+            </Grid.ColumnDefinitions>
+            <TabControl x:Name="MainTabControl" TabStripPlacement="Top" Background="#F3F3F3" Margin="0,-24,0,0" RenderTransformOrigin="0.392,0.509" Grid.ColumnSpan="7">
+                <!-- Patients Tab -->
+                <TabItem Header="المرضى">
+                    <Grid Background="White">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- DataGrid on the Left -->
+                        <DataGrid x:Name="PatientsDataGrid" Margin="20,148,10,75" 
+                  BorderBrush="#dcdcdc" BorderThickness="1"
+                  RowBackground="White" AlternatingRowBackground="#f5f5f5"
+                  ColumnHeaderHeight="30" RowHeight="40" 
+                  GridLinesVisibility="None" 
+                  SelectionMode="Single" AlternationCount="1" SelectionChanged="PatientsDataGrid_SelectionChanged" FrozenColumnCount="80" ColumnWidth="5" Background="#FFF9FDFF" IsSynchronizedWithCurrentItem="True">
+                            <DataGrid.Effect>
+                                <DropShadowEffect Color="#FFCCCCCC" BlurRadius="17" Direction="700" ShadowDepth="5"/>
+                            </DataGrid.Effect>
+                            <DataGrid.Columns>
+
+
+
+
+
+
+
+                                <DataGridTextColumn Header="رقم الهاتف" Binding="{Binding PhoneNumber}" Width="*"/>
+                                <DataGridTextColumn Header="العنوان" Binding="{Binding Address}" Width="*"/>
+                                <DataGridTextColumn Header="المكان" Binding="{Binding City}" Width="*"/>
+                                <DataGridTextColumn Header="تاريخ الإزدياد" Binding="{Binding DateOfBirth}" Width="*"/>
+                                <DataGridTextColumn Header="الجنس" Binding="{Binding Gender}" Width="*"/>
+                                <DataGridTextColumn Header="العمر" Binding="{Binding Age}" Width="*"/>
+                                <DataGridTextColumn Header="اللقب" Binding="{Binding FamilyName}" Width="*"/>
+                                <DataGridTextColumn Header="الإسم" Binding="{Binding Name}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <Viewbox Stretch="Uniform" Margin="10,154,4,75" Grid.Column="1" OpacityMask="White">
+                            <!-- Form on the Right -->
+                            <StackPanel x:Name="stackPanel" Grid.Column="1" Height="863" Width="528" Background="#FFD7E7F3" ClipToBounds="{Binding Background, ElementName=stackPanel}" >
+
+                                <TextBlock Text="إضافة مريض" FontSize="40" FontWeight="Bold" Margin="0,10,0,20" 
+                   Foreground="#333" HorizontalAlignment="Center" TextAlignment="Center"/>
+
+                                <!-- Name -->
+                                <TextBlock Text="الإسم" FontSize="20" Foreground="#666" Margin="0,0,10,5" 
+                   HorizontalAlignment="Right" TextAlignment="Right"/>
+                                <TextBox x:Name="NameTextBox" HorizontalAlignment="Right" Height="40" Margin="20,0,10,15" 
+                 Style="{StaticResource RoundedTextBoxStyle}" FontSize="20" TextAlignment="Right" Width="500" Background="#FFF9F9F9"/>
+
+                                <!-- Family Name -->
+                                <TextBlock Text="اللقب" FontSize="20" Foreground="#666" Margin="0,0,10,5" 
+                   HorizontalAlignment="Right" TextAlignment="Right"/>
+                                <TextBox x:Name="FamilyNameTextBox" Height="40" Margin="20,0,10,15" 
+                 Style="{StaticResource RoundedTextBoxStyle}" FontSize="20" TextAlignment="Right" Width="500" HorizontalAlignment="Right"/>
+
+                                <!-- Age -->
+                                <TextBlock Text="العمر" FontSize="20" Foreground="#666" Margin="0,0,10,5" 
+                   HorizontalAlignment="Right" TextAlignment="Right"/>
+                                <TextBox x:Name="AgeTextBox" HorizontalAlignment="Right" Height="40" Margin="20,0,10,15" 
+                 Style="{StaticResource RoundedTextBoxStyle}" FontSize="20" TextAlignment="Right" Width="500"/>
+
+                                <!-- Gender -->
+                                <TextBlock Text="الجنس" FontSize="20" Foreground="#666" Margin="0,0,10,5" 
+                   HorizontalAlignment="Right" TextAlignment="Right"/>
+                                <ComboBox x:Name="GenderComboBox" HorizontalAlignment="Right" Height="40" Margin="20,0,10,15" Width="494" FontSize="20">
+                                    <ComboBoxItem Content="Male"/>
+                                    <ComboBoxItem Content="Female"/>
+                                </ComboBox>
+
+                                <!-- Date of Birth -->
+                                <TextBlock Text="تاريخ الإزدياد" FontSize="20" Foreground="#666" Margin="0,0,10,5" 
+                   HorizontalAlignment="Right" TextAlignment="Right"/>
+                                <DatePicker x:Name="DateOfBirthPicker" HorizontalAlignment="Right" Height="40" Margin="20,0,10,15" Width="492" FontSize="20"/>
+
+                                <!-- City -->
+                                <TextBlock Text="المكان" FontSize="20" Foreground="#666" Margin="0,0,10,5" 
+                   HorizontalAlignment="Right" TextAlignment="Right"/>
+                                <TextBox x:Name="CityTextBox" HorizontalAlignment="Right" Height="40" Margin="20,0,10,15" 
+                 Style="{StaticResource RoundedTextBoxStyle}" FontSize="20" TextAlignment="Right" Width="500"/>
+
+                                <!-- Address -->
+                                <TextBlock Text="العنوان" FontSize="20" Foreground="#666" Margin="0,0,10,5" 
+                   HorizontalAlignment="Right" TextAlignment="Right"/>
+                                <TextBox x:Name="AddressTextBox" HorizontalAlignment="Right" Height="40" Margin="20,0,10,15" 
+                 Style="{StaticResource RoundedTextBoxStyle}" FontSize="20" TextAlignment="Right" Width="500"/>
+
+                                <!-- Phone Number -->
+                                <TextBlock Text="رقم الهاتف" FontSize="20" Foreground="#666" Margin="0,0,10,5" 
+                   HorizontalAlignment="Right" TextAlignment="Right"/>
+                                <TextBox x:Name="PhoneNumberTextBox" HorizontalAlignment="Right" Height="40" Margin="20,0,10,15" 
+                 Style="{StaticResource RoundedTextBoxStyle}" FontSize="20" TextAlignment="Right" Width="500"/>
+                                <Button Height="42" Margin="10" Background="#0078D7" Foreground="White" FontSize="16" Width="182" HorizontalAlignment="Right" >
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" BorderBrush="#0078D7" BorderThickness="1" CornerRadius="10">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <TextBlock Text="اضافة" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+
+                                <!-- Submit Button -->
+                            </StackPanel>
+                        </Viewbox>
+
+                    </Grid>
+
+                </TabItem>
+
+
+
+
+                <!-- Appointments Tab -->
+                <TabItem Header="المواعيد">
+                    <Grid>
+
+                        <TextBlock Text="التحليلات والتقارير ستتوفر قريباً!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
+                    </Grid>
+                </TabItem>
+
+                <!-- Doctors Tab -->
+                <TabItem Header="الأطباء">
+                    <Grid>
+                        <TextBlock Text="التحليلات والتقارير ستتوفر قريباً!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
+                    </Grid>
+                </TabItem>
+
+                <!-- Reports Tab -->
+                <TabItem Header="التقارير">
+                    <Grid>
+                        <TextBlock Text="التحليلات والتقارير ستتوفر قريباً!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
+                    </Grid>
+                </TabItem>
+
+                <!-- Billing Tab -->
+                <TabItem Header="الفواتير">
+                    <Grid>
+                        <TextBlock Text="إدارة الفواتير هنا." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="الفحوصات">
+                    <Grid>
+                        <TextBlock Text="إدارة الفحوصات هنا." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="الأدوية">
+                    <Grid>
+                        <TextBlock Text="إدارة الأدوية هنا." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="النظارات">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="9*"/>
+                            <ColumnDefinition Width="7*"/>
+                            <ColumnDefinition Width="715*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="إدارة النظارات هنا." HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" Grid.Column="2" Margin="640,0,0,0"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="التكاليف">
+                    <Grid>
+                        <TextBlock Text="إدارة التكاليف هنا." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Grid>
+
+
+</Window>
