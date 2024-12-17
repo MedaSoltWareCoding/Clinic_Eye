@@ -9,12 +9,12 @@ Medical
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
-D:\c# project\Medical\Medical\App.xaml
-11407045341
 
-6708402928
+2-1094938431
+
+9-1826036031
 214170723055
-MainWindow.xaml;
+App.xaml;MainWindow.xaml;
 
-False
+True
 
