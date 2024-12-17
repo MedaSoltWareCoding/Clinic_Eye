@@ -1,8 +1,5 @@
 ﻿using Medical.Mod;
 using Medical.View;
-using MySql.Data.MySqlClient;
-using System.Collections.ObjectModel;
-using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,32 +7,23 @@ namespace Medical
 {
     public partial class MainWindow : Window
     {
-        private string connectionString = "server=localhost;database=clinics;user=root;password=;";
+        private Patient selectedPatient;
+
         private readonly PatientViewModel viewModel;
-        //public ObservableCollection<Patient> Patients { get; set; }
-
-
-
 
         public MainWindow()
 
+
         {
+
 
             InitializeComponent();
             viewModel = new PatientViewModel();
             DataContext = viewModel;
             LoadPatients1();
-
-
-
-            //Patients = new ObservableCollection<Patient>();
-            //PatientsDataGrid.ItemsSource = Patients; // Bind DataGrid to ObservableCollection
-            //LoadPatients();// Bind the ViewModel to the UI
-
-
-
         }
-        
+       
+
 
         private void OpenTab(object sender, RoutedEventArgs e)
         {
@@ -60,7 +48,7 @@ namespace Medical
                 // Create a patient object from input fields
                 Patient patient = new Patient
                 {
-                    
+                    Id = 0,
                     Name = NameTextBox.Text,
                     FamilyName = FamilyNameTextBox.Text,
                     Age = int.Parse(AgeTextBox.Text),
@@ -75,7 +63,7 @@ namespace Medical
                 viewModel.AddPatient(patient);
 
 
-                MessageBox.Show("Patient added successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                //MessageBox.Show("Patient added successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
@@ -91,7 +79,7 @@ namespace Medical
             try
             {
                 viewModel.LoadPatients();
-                MessageBox.Show("Patients loaded successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                //MessageBox.Show("Patients loaded successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (System.Exception ex)
             {
@@ -112,46 +100,66 @@ namespace Medical
 
         private void PatientsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+        
         }
 
-        //private void LoadPatients()
+
+        //public Patient SelectedPatient
         //{
-        //    Patients.Clear(); // Clear the current list before reloading
-        //    try
+        //    get => selectedPatient;
+        //    set
         //    {
-        //        using (MySqlConnection conn = new MySqlConnection(connectionString))
-        //        {
-        //            conn.Open();
-        //            string query = "SELECT * FROM patient";
-        //            MySqlCommand cmd = new MySqlCommand(query, conn);
-
-        //            using (MySqlDataReader reader = cmd.ExecuteReader())
-        //            {
-        //                while (reader.Read())
-        //                {
-
-        //                    Patients.Add(new Patient
-        //                    {
-                                
-        //                        Name = reader.GetString("pat_name"),
-        //                        FamilyName = reader.GetString("pat_fname"),
-        //                        Age = reader.GetInt32("pat_age"),
-        //                        Gender = reader.GetString("pat_gander"),
-        //                        Birthday = reader.GetDateTime("pat_birthday"),
-        //                        City = reader.GetString("pat_city"),
-        //                        Address = reader.GetString("pat_adress"),
-        //                        Phone = reader.GetString("pat_phone")
-        //                    });
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show("Error: " + ex.Message);
+        //        selectedPatient = value;
+        //        OnPropertyChanged(nameof(SelectedPatient));
         //    }
         //}
+
+        private void DeletePatient_Click(object sender, RoutedEventArgs e)
+        {
+            if (viewModel.SelectedPatient == null)
+            {
+                MessageBox.Show("Please select a patient to delete.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var result = MessageBox.Show("Are you sure you want to delete this patient?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    viewModel.DeletePatient(viewModel.SelectedPatient);
+                    MessageBox.Show("Patient deleted successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private void UpdatePatient_Click(object sender, RoutedEventArgs e)
+        {
+            if (viewModel.SelectedPatient == null)
+            {
+                MessageBox.Show("Please select a patient to update.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Update logic can be tied to input fields or a modal dialog
+            try
+            {
+                Patient updatedPatient = viewModel.SelectedPatient; // Example: Edit in-place
+                viewModel.UpdatePatient(updatedPatient);
+                MessageBox.Show("Patient updated successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+
 
 
 

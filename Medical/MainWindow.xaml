@@ -233,7 +233,7 @@
 
                         <!-- DataGrid on the Left -->
                         <DataGrid x:Name="PatientsDataGrid" Margin="20,148,10,75" 
-                  BorderBrush="#dcdcdc" BorderThickness="1"
+                  BorderBrush="#dcdcdc" BorderThickness="1"   SelectedItem="{Binding SelectedPatient}"
                   RowBackground="White" AlternatingRowBackground="#f5f5f5"
                   ColumnHeaderHeight="30" RowHeight="40" 
                   GridLinesVisibility="None" AutoGenerateColumns="False" ItemsSource="{Binding Patients}"
@@ -257,13 +257,14 @@
                                 <DataGridTextColumn Header="العمر" Binding="{Binding Age}" Width="*"/>
                                 <DataGridTextColumn Header="اللقب" Binding="{Binding FamilyName}" Width="*"/>
                                 <DataGridTextColumn Header="الإسم" Binding="{Binding Name}" Width="*"/>
-                                
+                                <DataGridTextColumn Header="رقم" Binding="{Binding Id}" Width="*"/>
+
                             </DataGrid.Columns>
                         </DataGrid>
 
-                        <Viewbox Stretch="Uniform" Margin="10,154,4,75" Grid.Column="1" OpacityMask="White">
+                        <Viewbox Stretch="Uniform" Margin="10,154,4,78" Grid.Column="1" OpacityMask="White">
                             <!-- Form on the Right -->
-                            <StackPanel x:Name="stackPanel" Grid.Column="1" Height="863" Width="528" Background="#FFD7E7F3" ClipToBounds="{Binding Background, ElementName=stackPanel}" >
+                            <StackPanel x:Name="stackPanel" Grid.Column="1" Height="865" Width="528" Background="#FFD7E7F3" ClipToBounds="{Binding Background, ElementName=stackPanel}" >
 
                                 <TextBlock Text="إضافة مريض" FontSize="40" FontWeight="Bold" Margin="0,10,0,20" 
                    Foreground="#333" HorizontalAlignment="Center" TextAlignment="Center"/>
@@ -316,18 +317,59 @@
                    HorizontalAlignment="Right" TextAlignment="Right"/>
                                 <TextBox x:Name="PhoneNumberTextBox" HorizontalAlignment="Right" Height="40" Margin="20,0,10,15" 
                  Style="{StaticResource RoundedTextBoxStyle}" FontSize="20" TextAlignment="Right" Width="500"/>
-                                <Button Height="42" Margin="10" Background="#0078D7" Foreground="White" FontSize="16" Width="182" HorizontalAlignment="Right"  Click="AddPatient_Click" >
-                                    <Button.Template>
-                                        <ControlTemplate TargetType="Button">
-                                            <Border Background="{TemplateBinding Background}" BorderBrush="#0078D7" BorderThickness="1" CornerRadius="10">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Button.Template>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <TextBlock Text="اضافة" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
+                                <WrapPanel Orientation="Horizontal">
+                                   
+
+                                    <Button Height="46" Background="#0078D7" Foreground="White" FontSize="16" Width="168"  Click="AddPatient_Click" Margin="20,0,0,0" >
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="{x:Type Button}">
+                                                <Border Background="{TemplateBinding Background}" BorderBrush="#0078D7" BorderThickness="1" CornerRadius="10">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                            <TextBlock Text="اضافة" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Height="47" Background="#FFD73B00" Foreground="White" FontSize="16" Width="165"  Click="DeletePatient_Click" HorizontalAlignment="Center" Margin="10,0,0,0" >
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="{x:Type Button}">
+                                                <Border Background="{TemplateBinding Background}" BorderBrush="#0078D7" BorderThickness="1" CornerRadius="10">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                            <TextBlock Text="حذف" Margin="0,0,10,0" VerticalAlignment="Center"/>
+
+                                        </StackPanel>
+
+
+
+                                    </Button>
+
+                                    <Button Height="46" Background="#FF00D7D2" Foreground="White" FontSize="16" Width="155" HorizontalAlignment="Right"  Click="UpdatePatient_Click" Margin="10,0,0,0" >
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="{x:Type Button}">
+                                                <Border Background="{TemplateBinding Background}" BorderBrush="#0078D7" BorderThickness="1" CornerRadius="10">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                            <TextBlock Text="تعديل" Margin="0,0,10,0" VerticalAlignment="Center"/>
+
+                                        </StackPanel>
+                                    </Button>
+
+
+
+
+                                </WrapPanel>
+
+
+
 
                                 <!-- Submit Button -->
                             </StackPanel>

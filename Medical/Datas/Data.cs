@@ -44,7 +44,7 @@ namespace Medical.Datas
 
                                 patients.Add(new Patient
                                 {
-
+                                    Id = reader.GetInt32(0),
                                     Name = reader.GetString("pat_name"),
                                     FamilyName = reader.GetString("pat_fname"),
                                     Age = reader.GetInt32("pat_age"),
@@ -70,7 +70,7 @@ namespace Medical.Datas
 
 
 
-        public void AddPatient( string name, string fname, int age, string gender, DateTime? birthday, string city, string address, string phone)
+        public void AddPatient(int Id, string name, string fname, int age, string gender, DateTime? birthday, string city, string address, string phone)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -105,27 +105,69 @@ namespace Medical.Datas
             }
         }
 
-        //private void LoadPatients()
-        //{
-        //    using (MySqlConnection conn = new MySqlConnection(connectionString))
-        //    {
-        //        try
-        //        {
-        //            conn.Open();
-        //            string query = "SELECT * FROM patient";
-        //            MySqlCommand cmd = new MySqlCommand(query, conn);
-        //            MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-        //            DataTable dt = new DataTable();
-        //            adapter.Fill(dt);
-                    
-        //            PatientsDataGrid.ItemsSource = dt.DefaultView;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show("Error: " + ex.Message);
-        //        }
-        //    }
-        //}
+        public void DeletePatient(int patientId)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = "DELETE FROM patient WHERE id = @id";
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@id", patientId);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    throw new Exception("Database error: " + ex.Message, ex);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error: " + ex.Message, ex);
+                }
+            }
+        }
+        public void UpdatePatient(int patientId, string name, string fname, int age, string gender, DateTime? birthday, string city, string address, string phone)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = @"UPDATE patient 
+                             SET pat_name = @name, pat_fname = @fname, pat_age = @age, 
+                                 pat_gander = @gender, pat_birthday = @birthday, 
+                                 pat_city = @city, pat_adress = @address, pat_phone = @phone 
+                             WHERE id = @id";
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@id", patientId);
+                        cmd.Parameters.AddWithValue("@name", name);
+                        cmd.Parameters.AddWithValue("@fname", fname);
+                        cmd.Parameters.AddWithValue("@age", age);
+                        cmd.Parameters.AddWithValue("@gender", gender);
+                        cmd.Parameters.AddWithValue("@birthday", birthday.HasValue ? birthday.Value.ToString("yyyy-MM-dd") : DBNull.Value);
+                        cmd.Parameters.AddWithValue("@city", city);
+                        cmd.Parameters.AddWithValue("@address", address);
+                        cmd.Parameters.AddWithValue("@phone", phone);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    throw new Exception("Database error: " + ex.Message, ex);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error: " + ex.Message, ex);
+                }
+            }
+        }
+
+
 
     }
 }
