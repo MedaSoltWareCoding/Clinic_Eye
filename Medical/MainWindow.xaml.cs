@@ -7,9 +7,11 @@ namespace Medical
 {
     public partial class MainWindow : Window
     {
-        private Patient selectedPatient;
+       
+        private readonly Patient_ViewModel pat_viewModel;
+        private readonly Doctor_ViewModel  doc_viewModel;
+        private readonly Med_ViewModel   med_viewModel;
 
-        private readonly PatientViewModel viewModel;
 
         public MainWindow()
 
@@ -18,12 +20,27 @@ namespace Medical
 
 
             InitializeComponent();
-            viewModel = new PatientViewModel();
-            DataContext = viewModel;
-            LoadPatients1();
-        }
-       
+            pat_viewModel = new Patient_ViewModel();
+            doc_viewModel = new Doctor_ViewModel();
+            med_viewModel = new Med_ViewModel();
+          
 
+            PatientsDataGrid.DataContext = pat_viewModel;
+            DoctorsDataGrid.DataContext = doc_viewModel;
+            MedecineDataGrid.DataContext = med_viewModel;
+
+            med_viewModel.LoadMedecines();
+            pat_viewModel.LoadPatients();
+            doc_viewModel.LoadDoctors();
+            
+        }
+
+
+
+        private void PatientsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
 
         private void OpenTab(object sender, RoutedEventArgs e)
         {
@@ -41,6 +58,19 @@ namespace Medical
             }
         }
 
+        //Patient Block********************************************************
+        public void LoadPatients1()
+        {
+            try
+            {
+                pat_viewModel.LoadPatients();
+                //MessageBox.Show("Patients loaded successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         private void AddPatient_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -60,7 +90,7 @@ namespace Medical
                 };
 
                 // Add the patient using the ViewModel
-                viewModel.AddPatient(patient);
+                pat_viewModel.AddPatient(patient);
 
 
                 //MessageBox.Show("Patient added successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -70,53 +100,12 @@ namespace Medical
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             LoadPatients1();
-            ClearInputFields();
+            Pat_ClearInputFields();
 
         }
-
-        public void LoadPatients1()
-        {
-            try
-            {
-                viewModel.LoadPatients();
-                //MessageBox.Show("Patients loaded successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void ClearInputFields()
-        {
-            NameTextBox.Clear();
-            FamilyNameTextBox.Clear();
-            AgeTextBox.Clear();
-            DateOfBirthPicker.SelectedDate = null;
-            CityTextBox.Clear();
-            AddressTextBox.Clear();
-            PhoneNumberTextBox.Clear();
-        }
-
-        private void PatientsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-        
-        }
-
-
-        //public Patient SelectedPatient
-        //{
-        //    get => selectedPatient;
-        //    set
-        //    {
-        //        selectedPatient = value;
-        //        OnPropertyChanged(nameof(SelectedPatient));
-        //    }
-        //}
-
         private void DeletePatient_Click(object sender, RoutedEventArgs e)
         {
-            if (viewModel.SelectedPatient == null)
+            if (pat_viewModel.SelectedPatient == null)
             {
                 MessageBox.Show("Please select a patient to delete.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -127,7 +116,7 @@ namespace Medical
             {
                 try
                 {
-                    viewModel.DeletePatient(viewModel.SelectedPatient);
+                    pat_viewModel.DeletePatient(pat_viewModel.SelectedPatient);
                     MessageBox.Show("Patient deleted successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
@@ -136,10 +125,9 @@ namespace Medical
                 }
             }
         }
-
         private void UpdatePatient_Click(object sender, RoutedEventArgs e)
         {
-            if (viewModel.SelectedPatient == null)
+            if (pat_viewModel.SelectedPatient == null)
             {
                 MessageBox.Show("Please select a patient to update.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -148,8 +136,8 @@ namespace Medical
             // Update logic can be tied to input fields or a modal dialog
             try
             {
-                Patient updatedPatient = viewModel.SelectedPatient; // Example: Edit in-place
-                viewModel.UpdatePatient(updatedPatient);
+                Patient updatedPatient = pat_viewModel.SelectedPatient; // Example: Edit in-place
+                pat_viewModel.UpdatePatient(updatedPatient);
                 MessageBox.Show("Patient updated successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
@@ -157,6 +145,221 @@ namespace Medical
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private void Pat_ClearInputFields()
+        {
+            NameTextBox.Clear();
+            FamilyNameTextBox.Clear();
+            AgeTextBox.Clear();
+            DateOfBirthPicker.SelectedDate = null;
+            CityTextBox.Clear();
+            AddressTextBox.Clear();
+            PhoneNumberTextBox.Clear();
+        }
+
+
+        public void LoadDoctors1()
+        {
+            try
+            {
+                doc_viewModel.LoadDoctors();
+                //MessageBox.Show("doctors loaded successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void AddDoctor_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Create a patient object from input fields
+                Doctors doctor = new Doctors
+                {
+                    Id_doc = 0,
+                    Name_doc = NameTextBox1.Text,
+                    Familyname_doc = FamilyNameTextBox1.Text,
+                    Age_doc = int.Parse(AgeTextBox1.Text),
+                    Adress_doc = AddressTextBox1.Text,
+                    Phone_doc = PhoneNumberTextBox1.Text,
+                    Branch_doc = BranchTextBox1.Text
+                };
+
+                // Add the patient using the ViewModel
+                doc_viewModel.AddDocotr(doctor);
+
+
+                MessageBox.Show("Doctor added successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            LoadDoctors1();
+            Doc_ClearInputFields();
+
+        }
+        private void DeleteDoctor_Click(object sender, RoutedEventArgs e)
+        {
+            if (doc_viewModel.SelectedDoctor == null)
+            {
+                MessageBox.Show("Please select a doctor to delete.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var result = MessageBox.Show("Are you sure you want to delete this patient?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    doc_viewModel.DeleteDoctor(doc_viewModel.SelectedDoctor);
+                    MessageBox.Show("Patient deleted successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+        private void UpdateDoctor_Click(object sender, RoutedEventArgs e)
+        {
+            if (doc_viewModel.SelectedDoctor == null)
+            {
+                MessageBox.Show("Please select a doctor to update.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Update logic can be tied to input fields or a modal dialog
+            try
+            {
+                Doctors updtaeDoctors = doc_viewModel.SelectedDoctor;
+                //MessageBox.Show(" this id  " + updtaeDoctors.Id_doc, "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                // Example: Edit in-place
+                doc_viewModel.UpdateDoctor(updtaeDoctors);
+                MessageBox.Show("Doctor updated successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+
+
+        }
+        public void Doc_ClearInputFields()
+        {
+            NameTextBox1.Clear();
+            FamilyNameTextBox1.Clear();
+            AgeTextBox1.Clear();
+            AddressTextBox1.Clear();
+            PhoneNumberTextBox1.Clear();
+            BranchTextBox1.Clear();
+        }
+
+
+        public void LoadMedecent1()
+        {
+            try
+            {
+                med_viewModel.LoadMedecines();
+                //MessageBox.Show("suscc");
+
+            }
+            catch(System.Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        public void AddMedecine_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Medecine medecine = new Medecine
+                {
+                    Id_med = 0,
+                    Name_med = NameTextBox2.Text,
+                    Descreption_med = DescriptionTextBox2.Text,
+                    dosage_me = DosageBox2.Text
+
+                };
+                med_viewModel.AddMedecine(medecine);
+
+            } catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            LoadMedecent1();
+            Med_ClearInputFields();
+
+        }
+        private void DeleteMedecine_Click(object sender, RoutedEventArgs e)
+        {
+            if (med_viewModel.SelectedMedicne == null)
+            {
+                MessageBox.Show("Please select a patient to delete.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var result = MessageBox.Show("Are you sure you want to delete this patient?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    med_viewModel.DeleteMedecine(med_viewModel.SelectedMedicne);
+                    MessageBox.Show("Medecine deleted successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private void UpdateMedecine_Click(object sender, RoutedEventArgs e)
+        {
+            if (med_viewModel.SelectedMedicne == null)
+            {
+                MessageBox.Show("Please select a medecine to update.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Update logic can be tied to input fields or a modal dialog
+            try
+            {
+                Medecine updateMedecine = med_viewModel.SelectedMedicne;
+                //MessageBox.Show(" this id  " + updtaeDoctors.Id_doc, "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                // Example: Edit in-place
+                med_viewModel.UpdateMedecinet(updateMedecine);
+                MessageBox.Show("Medecine updated successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+
+
+        }
+
+
+
+
+
+
+        public void Med_ClearInputFields()
+        {
+            NameTextBox2.Clear();
+            DescriptionTextBox2.Clear();
+            DosageBox2.Clear();
+        }
+
+
+        
+
+
+
 
 
 
@@ -168,6 +371,11 @@ namespace Medical
 
 
     }
+
+
+
+
+
 }
 
 
