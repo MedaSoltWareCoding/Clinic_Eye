@@ -41,3 +41,46 @@ D:\c# project\Medical\Medical\bin\Debug\net8.0-windows\runtimes\win-x64\native\k
 D:\c# project\Medical\Medical\bin\Debug\net8.0-windows\runtimes\win-x64\native\krb5_64.dll
 D:\c# project\Medical\Medical\bin\Debug\net8.0-windows\runtimes\win-x64\native\krbcc64.dll
 D:\c# project\Medical\Medical\obj\Debug\net8.0-windows\Medical.sourcelink.json
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\Medical.exe
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\Medical.deps.json
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\Medical.runtimeconfig.json
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\Medical.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\Medical.pdb
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\BouncyCastle.Cryptography.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\Dynamitey.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\ExtendedWPFConverters.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\ExtendedWPFVisualTreeHelper.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\Google.Protobuf.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\K4os.Compression.LZ4.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\K4os.Compression.LZ4.Streams.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\K4os.Hash.xxHash.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\MaterialDesignColors.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\MaterialDesignThemes.Wpf.AddOns.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\MaterialDesignThemes.Wpf.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\Microsoft.Xaml.Behaviors.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\MySql.Data.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\System.IO.Pipelines.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\ZstdSharp.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\runtimes\win-x64\native\comerr64.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\runtimes\win-x64\native\gssapi64.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\runtimes\win-x64\native\k5sprt64.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\runtimes\win-x64\native\krb5_64.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\runtimes\win-x64\native\krbcc64.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\obj\Debug\net8.0-windows\Medical.csproj.AssemblyReference.cache
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\obj\Debug\net8.0-windows\MainWindow.g.cs
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\obj\Debug\net8.0-windows\App.g.cs
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\obj\Debug\net8.0-windows\Medical_MarkupCompile.cache
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\obj\Debug\net8.0-windows\Medical_MarkupCompile.lref
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\obj\Debug\net8.0-windows\MainWindow.baml
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\obj\Debug\net8.0-windows\Medical.g.resources
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\obj\Debug\net8.0-windows\Medical.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\obj\Debug\net8.0-windows\Medical.AssemblyInfoInputs.cache
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\obj\Debug\net8.0-windows\Medical.AssemblyInfo.cs
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\obj\Debug\net8.0-windows\Medical.csproj.CoreCompileInputs.cache
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\obj\Debug\net8.0-windows\Medical.sourcelink.json
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\obj\Debug\net8.0-windows\Medical.csproj.Up2Date
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\obj\Debug\net8.0-windows\Medical.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\obj\Debug\net8.0-windows\refint\Medical.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\obj\Debug\net8.0-windows\Medical.pdb
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\obj\Debug\net8.0-windows\Medical.genruntimeconfig.cache
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\obj\Debug\net8.0-windows\ref\Medical.dll

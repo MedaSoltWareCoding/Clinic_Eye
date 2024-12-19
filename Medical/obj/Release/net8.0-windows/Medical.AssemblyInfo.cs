@@ -14,7 +14,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Medical")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b26d6d45bcf232432709371ce4ed93aa1a3d1a8a")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ec8b4d18a7dd8a774cd40554664d50e22c2b97b1")]
+>>>>>>> main
 [assembly: System.Reflection.AssemblyProductAttribute("Medical")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Medical")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\c# project\Medical\Medical\obj\Debug\net8.0-windows\
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\obj\Debug\net8.0-windows\
 Medical
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
-D:\c# project\Medical\Medical\App.xaml
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\App.xaml
 11407045341
 
-6708402928
+12-1797791939
 214170723055
 MainWindow.xaml;
 
-False
+True
 
