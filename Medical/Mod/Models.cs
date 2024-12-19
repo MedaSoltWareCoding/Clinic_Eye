@@ -11,5 +11,12 @@
         public required string City { get; set; }
         public required string Address { get; set; }
         public required string Phone { get; set; }
+
+        public override string ToString()
+        {
+            return this.Name +","+ this.FamilyName;
+        }
+
     }
+
 }

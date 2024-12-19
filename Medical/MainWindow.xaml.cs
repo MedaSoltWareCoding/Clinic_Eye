@@ -8,19 +8,28 @@ namespace Medical
     public partial class MainWindow : Window
     {
         private Patient selectedPatient;
-
+        private readonly AppointmenViewModel appointemtview;
         private readonly PatientViewModel viewModel;
-
+        
         public MainWindow()
-
-
         {
 
-
             InitializeComponent();
+            // MessageBox.Show("Error:", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
             viewModel = new PatientViewModel();
-            DataContext = viewModel;
+            appointemtview = new AppointmenViewModel();
+
+            PatientsDataGrid.DataContext = viewModel;
+            appointmentsDataGrid.DataContext =appointemtview;
+            patientComboBox.DataContext = viewModel;
+            patientComboBox.SelectedIndex = 0;
+            DateOfappointemnt.SelectedDate = DateTime.Now;
+           
             LoadPatients1();
+
+            
+            LoadAppointments();
         }
        
 
@@ -87,6 +96,19 @@ namespace Medical
             }
         }
 
+        public void LoadAppointments()
+        {
+            try
+            {
+                appointemtview.LoadAppointemnts();
+                //MessageBox.Show("Patients loaded successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void ClearInputFields()
         {
             NameTextBox.Clear();
@@ -139,7 +161,7 @@ namespace Medical
 
         private void UpdatePatient_Click(object sender, RoutedEventArgs e)
         {
-            if (viewModel.SelectedPatient == null)
+           if (viewModel.SelectedPatient == null)
             {
                 MessageBox.Show("Please select a patient to update.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -158,15 +180,73 @@ namespace Medical
             }
         }
 
+        private void AddAppointment_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Create a appointment object from input fields
+                Appointment appointment = new Appointment
+                {
+                    Id = 0,
+                    patient = (Patient) patientComboBox.SelectedItem,
+                    date = (DateTime) DateOfappointemnt.SelectedDate,
+                 
+                };
+                appointemtview.AddAppointment(appointment);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
+            LoadAppointments();
+            //ClearInputFields();
 
+        }
 
+        private void DeleteAppointment_Click(object sender, RoutedEventArgs e)
+        {
+            if (appointmentsDataGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a patient to delete.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
+            var result = MessageBox.Show("Are you sure you want to delete this appointemnt?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    appointemtview.DeleteAppointment((Appointment) appointmentsDataGrid.SelectedItem);
+                    MessageBox.Show("Patient deleted successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
 
+        private void UpdateAppointment_Click(object sender, RoutedEventArgs e)
+        {
+            if (viewModel.SelectedPatient == null)
+            {
+                MessageBox.Show("Please select a patient to update.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-
-
-
+            // Update logic can be tied to input fields or a modal dialog
+            try
+            {
+                Patient updatedPatient = viewModel.SelectedPatient; // Example: Edit in-place
+                viewModel.UpdatePatient(updatedPatient);
+                MessageBox.Show("Patient updated successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }
 
