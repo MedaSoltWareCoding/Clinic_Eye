@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 19, 2024 at 09:19 AM
+-- Generation Time: Dec 19, 2024 at 11:23 AM
 -- Server version: 10.4.32-MariaDB-log
 -- PHP Version: 8.0.30
 
@@ -24,15 +24,14 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `appointments`
+-- Table structure for table `appointment`
 --
 
-CREATE TABLE `appointments` (
+CREATE TABLE `appointment` (
   `id` int(100) NOT NULL,
+  `id_patient` int(100) NOT NULL,
   `date` date NOT NULL,
-  `time` time NOT NULL DEFAULT current_timestamp(),
-  `doctor` varchar(100) NOT NULL,
-  `patient` varchar(100) NOT NULL
+  `state` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -123,12 +122,6 @@ INSERT INTO `patient` (`id`, `pat_name`, `pat_fname`, `pat_age`, `pat_gander`, `
 --
 
 --
--- Indexes for table `appointments`
---
-ALTER TABLE `appointments`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `doctors`
 --
 ALTER TABLE `doctors`
@@ -149,12 +142,6 @@ ALTER TABLE `patient`
 --
 -- AUTO_INCREMENT for dumped tables
 --
-
---
--- AUTO_INCREMENT for table `appointments`
---
-ALTER TABLE `appointments`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `doctors`
