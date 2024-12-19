@@ -38,6 +38,7 @@ namespace Medical.View
 
             // Get the list of patients from the database
             var doctorsFromDb = databaseHelper.GetAllDoctors();
+           
 
             // Add the patients to the ObservableCollection
             foreach (var doctor in doctorsFromDb)

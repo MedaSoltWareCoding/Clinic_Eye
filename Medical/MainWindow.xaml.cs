@@ -2,6 +2,7 @@
 using Medical.View;
 using System.Windows;
 using System.Windows.Controls;
+using static MaterialDesignThemes.Wpf.Theme.ToolBar;
 
 namespace Medical
 {
@@ -11,6 +12,7 @@ namespace Medical
         private readonly Patient_ViewModel pat_viewModel;
         private readonly Doctor_ViewModel  doc_viewModel;
         private readonly Med_ViewModel   med_viewModel;
+        private readonly AppointmenViewModel appo_viewmodel;
 
 
         public MainWindow()
@@ -23,16 +25,28 @@ namespace Medical
             pat_viewModel = new Patient_ViewModel();
             doc_viewModel = new Doctor_ViewModel();
             med_viewModel = new Med_ViewModel();
-          
+            appo_viewmodel = new AppointmenViewModel();
+
 
             PatientsDataGrid.DataContext = pat_viewModel;
             DoctorsDataGrid.DataContext = doc_viewModel;
             MedecineDataGrid.DataContext = med_viewModel;
 
+            appointmentsDataGrid.DataContext = appo_viewmodel;
+            patientComboBox.DataContext = pat_viewModel;
+            patientComboBox.SelectedIndex = 0;
+            DateOfappointemnt.SelectedDate = DateTime.Now;
+            doctorComboBox.DataContext = doc_viewModel;
+            doctorComboBox.SelectedIndex = 0;
+            //var items = doc_viewModel.Doctros;
+
+            //doctorComboBox.ItemsSource = items.Where(item => item.Name_doc != "NewPlaceholder").ToList();
+
             med_viewModel.LoadMedecines();
             pat_viewModel.LoadPatients();
             doc_viewModel.LoadDoctors();
-            
+            appo_viewmodel.LoadAppointemnts();
+
         }
 
 
@@ -156,7 +170,7 @@ namespace Medical
             PhoneNumberTextBox.Clear();
         }
 
-
+        //Doctor Block********************************************************
         public void LoadDoctors1()
         {
             try
@@ -257,7 +271,7 @@ namespace Medical
             BranchTextBox1.Clear();
         }
 
-
+        //Medeicent Block********************************************************
         public void LoadMedecent1()
         {
             try
@@ -315,7 +329,6 @@ namespace Medical
                 }
             }
         }
-
         private void UpdateMedecine_Click(object sender, RoutedEventArgs e)
         {
             if (med_viewModel.SelectedMedicne == null)
@@ -342,12 +355,6 @@ namespace Medical
 
 
         }
-
-
-
-
-
-
         public void Med_ClearInputFields()
         {
             NameTextBox2.Clear();
@@ -355,8 +362,93 @@ namespace Medical
             DosageBox2.Clear();
         }
 
+        //Appoiment Block********************************************************
 
-        
+        public void LoadAppointments1()
+        {
+            try
+            {
+                appo_viewmodel.LoadAppointemnts();
+                //MessageBox.Show("Patients loaded successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+
+        private void AddAppointment_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Create a appointment object from input fields
+                Appointment appointment = new Appointment
+                {
+                    Id = 0,
+                    patient = (Patient)patientComboBox.SelectedItem,
+                    date = (DateTime)DateOfappointemnt.SelectedDate,
+
+                };
+                appo_viewmodel.AddAppointment(appointment);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            LoadAppointments1();
+            //ClearInputFields();
+
+        }
+
+        private void DeleteAppointment_Click(object sender, RoutedEventArgs e)
+        {
+            if (appointmentsDataGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a patient to delete.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var result = MessageBox.Show("Are you sure you want to delete this appointemnt?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    appo_viewmodel.DeleteAppointment((Appointment)appointmentsDataGrid.SelectedItem);
+                    MessageBox.Show("Patient deleted successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private void UpdateAppointment_Click(object sender, RoutedEventArgs e)
+        {
+            if (pat_viewModel.SelectedPatient == null)
+            {
+                MessageBox.Show("Please select a patient to update.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Update logic can be tied to input fields or a modal dialog
+            try
+            {
+                Patient updatedPatient = pat_viewModel.SelectedPatient; // Example: Edit in-place
+                pat_viewModel.UpdatePatient(updatedPatient);
+                MessageBox.Show("Patient updated successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+
 
 
 
