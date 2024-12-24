@@ -15,8 +15,12 @@
     <None Remove="budget.png" />
     <None Remove="doctor.png" />
     <None Remove="examination.png" />
+    <None Remove="images\paper.png" />
+    <None Remove="images\pin.png" />
     <None Remove="medicine.png" />
+    <None Remove="paper.png" />
     <None Remove="patient.png" />
+    <None Remove="pin.png" />
     <None Remove="sunglasses.png" />
   </ItemGroup>
 
@@ -35,7 +39,9 @@
     <Resource Include="images\doctor.png" />
     <Resource Include="images\examination.png" />
     <Resource Include="images\medicine.png" />
+    <Resource Include="images\paper.png" />
     <Resource Include="images\patient.png" />
+    <Resource Include="images\pin.png" />
     <Resource Include="images\sunglasses.png" />
   </ItemGroup>
 

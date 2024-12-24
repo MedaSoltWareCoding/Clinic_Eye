@@ -83,6 +83,7 @@ namespace Medical.Datas
                                      VALUES (@name, @fname, @age ,@address, @phone ,@branch)";
                     using (MySqlCommand cmd = new MySqlCommand(query, connection))
                     {
+
                         cmd.Parameters.AddWithValue("@name", name_dco);
                         cmd.Parameters.AddWithValue("@fname", fname_doc);
                         cmd.Parameters.AddWithValue("@age", age_doc);

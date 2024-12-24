@@ -51,4 +51,36 @@
         public int state { get; set; }
         public String family { get; set; }
     }
+    public class Exams
+    {
+        public required int Id  { get; set; }
+        public required string Cylinidrical_OD { get; set; }
+        public required string Spherical_OD { get; set; }
+        public required string Add_power_OD { get; set; }
+        public required string Axis_OD  { get; set; }
+        public required string Cylinidrical_OS  { get; set; }
+        public required string Spherical_OS { get; set; }
+        public required string Add_power_OS { get; set; }
+        public required string Axis_OS { get; set; }
+        public required string Base_cruve_OD    { get; set; }
+        public required string Diameterer_OD { get; set; }
+        public required string Power_OD     { get; set; }
+        public required string Brand_type_OD    { get; set; }
+        public required string Base_cruve_OS { get; set; }
+        public required string Diameterer_OS { get; set; }
+        public required string Power_OS { get; set; }
+        public required string Brand_type_OS { get; set; }
+        public required string DV {  get; set; }
+        public required string NV { get; set; }
+        public required string CV { get; set; }
+        public required string SPH { get; set; }
+        public required string CYL { get; set; }
+        public required string AXIS { get; set; }
+        public required string PDP { get; set; }
+        public required string NDP { get; set; }
+        public required string CTR { get; set; }
+        public required string Phorias { get; set; }
+        public required string Steropsis{ get; set; }
+
+    }
 }

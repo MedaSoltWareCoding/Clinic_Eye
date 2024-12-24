@@ -1,8 +1,13 @@
 ﻿using Medical.Mod;
 using Medical.View;
+using System.Reflection;
+using System.Runtime.ConstrainedExecution;
+using System.Runtime.Intrinsics.Arm;
 using System.Windows;
 using System.Windows.Controls;
+using static MaterialDesignThemes.Wpf.Theme;
 using static MaterialDesignThemes.Wpf.Theme.ToolBar;
+using Button = System.Windows.Controls.Button;
 
 namespace Medical
 {
@@ -13,6 +18,7 @@ namespace Medical
         private readonly Doctor_ViewModel  doc_viewModel;
         private readonly Med_ViewModel   med_viewModel;
         private readonly AppointmenViewModel appo_viewmodel;
+        private readonly Exm_ViewModel exm_viewModel;
 
 
         public MainWindow()
@@ -26,11 +32,18 @@ namespace Medical
             doc_viewModel = new Doctor_ViewModel();
             med_viewModel = new Med_ViewModel();
             appo_viewmodel = new AppointmenViewModel();
+            exm_viewModel = new Exm_ViewModel();
 
 
             PatientsDataGrid.DataContext = pat_viewModel;
             DoctorsDataGrid.DataContext = doc_viewModel;
             MedecineDataGrid.DataContext = med_viewModel;
+            DocDataGrid.DataContext = doc_viewModel;
+            PatDataGrid.DataContext = pat_viewModel;
+            ExamDataGrid.DataContext = exm_viewModel;
+
+
+
 
             appointmentsDataGrid.DataContext = appo_viewmodel;
             patientComboBox.DataContext = pat_viewModel;
@@ -46,15 +59,82 @@ namespace Medical
             pat_viewModel.LoadPatients();
             doc_viewModel.LoadDoctors();
             appo_viewmodel.LoadAppointemnts();
+            exm_viewModel.LoadExams();
+
 
         }
+        private void DocDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Get the selected item
+            var selectedItem = DocDataGrid.SelectedItem;
+
+            var nameDocProperty = selectedItem.GetType().GetProperty("Name_doc");
+            var fnameDocProprety = selectedItem.GetType().GetProperty("Familyname_doc");
+            var ageDocPropreety = selectedItem.GetType().GetProperty("Age_doc");
+            var branchProprety = selectedItem.GetType().GetProperty("Branch_doc");
+
+            if (selectedItem != null)
+            {
+                // Convert the selected item to a string
+                //textBlock.Text = selectedItem.ToString();
+                NametextBlock.Text = nameDocProperty.GetValue(selectedItem)?.ToString();
+                FnametextBlock.Text = fnameDocProprety.GetValue(selectedItem)?.ToString();
+                AgetextBlock.Text = ageDocPropreety.GetValue(selectedItem)?.ToString();
+                BranchtextBlock.Text = branchProprety.GetValue(selectedItem)?.ToString();
+
+            }
+            else
+            {
+                NametextBlock.Text = "No selection";
+                FnametextBlock.Text = "No selecttion";
+                AgetextBlock.Text = "No selecttion";
+                BranchtextBlock.Text = "No selecttion";
+            }
+        }
+
 
 
 
         private void PatientsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+           
 
         }
+
+        private void PatDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Get the selected item
+            var selectedItem = PatDataGrid.SelectedItem;
+            var idPatProperty = selectedItem.GetType().GetProperty("Id");
+            var namePatProperty = selectedItem.GetType().GetProperty("Name");
+            var fnamePatProperty = selectedItem.GetType().GetProperty("FamilyName");
+            var agePatProperty = selectedItem.GetType().GetProperty("Age");
+            var phonePatProperty = selectedItem.GetType().GetProperty("Phone");
+
+            if (selectedItem != null)
+            {
+                // Convert the selected item to a string
+                //textBlock.Text = selectedItem.ToString();
+                Pat_idtextbloc.Text = idPatProperty.GetValue(selectedItem)?.ToString();
+                Pat_nametextbloc.Text = namePatProperty.GetValue(selectedItem)?.ToString();
+                Pat_fnametextblock.Text = fnamePatProperty.GetValue(selectedItem)?.ToString();
+                Pat_agetextblock.Text = agePatProperty.GetValue(selectedItem)?.ToString();
+                Pat_phonetextblock.Text = phonePatProperty.GetValue(selectedItem)?.ToString();
+
+            }
+            else
+            {
+                Pat_idtextbloc.Text = "No selected";
+                Pat_nametextbloc.Text = "No selection";
+                Pat_fnametextblock.Text = "No selecttion";
+                Pat_agetextblock.Text = "No selecttion";
+                Pat_phonetextblock.Text = "No selecttion";
+            }
+
+        }
+
+
+
 
         private void OpenTab(object sender, RoutedEventArgs e)
         {
@@ -376,9 +456,6 @@ namespace Medical
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-
-
         private void AddAppointment_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -402,7 +479,6 @@ namespace Medical
             //ClearInputFields();
 
         }
-
         private void DeleteAppointment_Click(object sender, RoutedEventArgs e)
         {
             if (appointmentsDataGrid.SelectedItem == null)
@@ -425,7 +501,6 @@ namespace Medical
                 }
             }
         }
-
         private void UpdateAppointment_Click(object sender, RoutedEventArgs e)
         {
             if (pat_viewModel.SelectedPatient == null)
@@ -448,6 +523,108 @@ namespace Medical
         }
 
 
+        public void AddExams_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Exams exams = new Exams
+                {
+                    Id =  int.Parse(Pat_idtextbloc.Text),
+                    Cylinidrical_OD = Cy_OD_textbox.Text,
+                    Spherical_OD = Sp_OD_textbox.Text,
+                    Add_power_OD = Ad_OD_textbox.Text,
+                    Axis_OD = Ax_OD_textbox.Text,
+                    Cylinidrical_OS = Cy_OS_textbox.Text,
+                    Spherical_OS = Sp_OS_textbox.Text,
+                    Add_power_OS = Ad_OS_textbox.Text,
+                    Axis_OS = Ax_OS_textbox.Text,
+                    Base_cruve_OD = Bas_OD_textbox.Text,
+                    Diameterer_OD = Di_OD_textbox.Text,
+                    Power_OD = Po_OD_textbox.Text,
+                    Brand_type_OD = Brand_OD_textbox.Text,
+                    Base_cruve_OS = Bas_OS_textbox.Text,
+                    Diameterer_OS = Di_OS_textbox.Text,
+                    Power_OS = Po_OS_textbox.Text,
+                    Brand_type_OS = Brand_OS_textbox.Text,
+                    DV = Dv_textbox.Text,
+                    NV = Nv_textbox.Text,
+                    CV = Cv_textbox.Text,
+                    SPH = Sph_textbox.Text,
+                    CYL = Cyl_textbox.Text,
+                    AXIS = Axis_textbox.Text,
+                    PDP = Pdp_textbox.Text,
+                    NDP = Ndp_textbox.Text,
+                    CTR = Ctr_textbox.Text,
+                    Phorias = Pho_textbox.Text,
+                    Steropsis = Stre_textbox.Text
+                };
+                exm_viewModel.AddExams(exams);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            //LoadMedecent1();
+            //Med_ClearInputFields();
+            Exam_ClearInputFields();
+            LoadExam1();
+           
+
+        }
+        public void DeleteExams_Click(object sender, EventArgs e)
+        {
+            if (ExamDataGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a patient to delete.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var result = MessageBox.Show("Are you sure you want to delete this appointemnt?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    exm_viewModel.DeleteExams((Exams)ExamDataGrid.SelectedItem);
+                    MessageBox.Show("Patient deleted successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+
+        }
+
+        public void Exam_ClearInputFields()
+        {
+            Cy_OD_textbox.Clear();
+            Sp_OD_textbox.Clear();
+            Ad_OD_textbox.Clear();
+            Ax_OD_textbox.Clear();
+            Cy_OS_textbox.Clear();
+            Sp_OS_textbox.Clear();
+            Ad_OS_textbox.Clear();
+            Ax_OS_textbox.Clear();
+            Bas_OD_textbox.Clear();
+            Di_OD_textbox.Clear();
+            Po_OD_textbox.Clear();
+            Brand_OD_textbox.Clear();
+            Bas_OS_textbox.Clear();
+            Di_OS_textbox.Clear();
+            Po_OS_textbox.Clear();
+            Brand_OS_textbox.Clear();
+            Dv_textbox.Clear();
+            Nv_textbox.Clear();
+            Cv_textbox.Clear();
+            Sph_textbox.Clear();
+            Cyl_textbox.Clear();
+            Axis_textbox.Clear();
+            Pdp_textbox.Clear();
+            Ndp_textbox.Clear();
+            Ctr_textbox.Clear();
+            Pho_textbox.Clear();
+            Stre_textbox.Clear();
 
 
 
@@ -457,6 +634,48 @@ namespace Medical
 
 
 
+
+
+
+
+
+
+        }
+        public void LoadExam1()
+        {
+            try
+            {
+                exm_viewModel.LoadExams();
+                //MessageBox.Show("suscc");
+
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CheckBox_Checked_1(object sender, RoutedEventArgs e)
+        {
+
+        }
 
 
 
