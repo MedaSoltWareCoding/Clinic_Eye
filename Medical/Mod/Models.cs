@@ -1,4 +1,6 @@
-﻿namespace Medical.Mod
+﻿using System.Collections.ObjectModel;
+
+namespace Medical.Mod
 {
     public class Patient
     {
@@ -14,8 +16,9 @@
 
         public override string ToString()
         {
-            return this.Name + "," + this.FamilyName;
+            return this.Name + "  " + this.FamilyName;
         }
+        public ObservableCollection<string> Files { get; set; } = new ObservableCollection<string>();
     }
 
     public class Doctors
@@ -29,7 +32,7 @@
         public required string Branch_doc {get; set;}
         public override string ToString()
         {
-            return this.Name_doc + "," + this.Familyname_doc;
+            return this.Name_doc + "  " + this.Familyname_doc;
         }
 
     }

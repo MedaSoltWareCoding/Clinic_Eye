@@ -1,5 +1,6 @@
 ﻿using Medical.Mod;
 using Medical.View;
+using Microsoft.Win32;
 using System.Reflection;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.Intrinsics.Arm;
@@ -8,7 +9,7 @@ using System.Windows.Controls;
 using static MaterialDesignThemes.Wpf.Theme;
 using static MaterialDesignThemes.Wpf.Theme.ToolBar;
 using Button = System.Windows.Controls.Button;
-
+using System.Collections.ObjectModel;
 namespace Medical
 {
     public partial class MainWindow : Window
@@ -95,43 +96,49 @@ namespace Medical
 
 
 
-        private void PatientsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-           
 
-        }
 
         private void PatDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Get the selected item
-            var selectedItem = PatDataGrid.SelectedItem;
-            var idPatProperty = selectedItem.GetType().GetProperty("Id");
-            var namePatProperty = selectedItem.GetType().GetProperty("Name");
-            var fnamePatProperty = selectedItem.GetType().GetProperty("FamilyName");
-            var agePatProperty = selectedItem.GetType().GetProperty("Age");
-            var phonePatProperty = selectedItem.GetType().GetProperty("Phone");
-
-            if (selectedItem != null)
+            try
             {
-                // Convert the selected item to a string
-                //textBlock.Text = selectedItem.ToString();
-                Pat_idtextbloc.Text = idPatProperty.GetValue(selectedItem)?.ToString();
-                Pat_nametextbloc.Text = namePatProperty.GetValue(selectedItem)?.ToString();
-                Pat_fnametextblock.Text = fnamePatProperty.GetValue(selectedItem)?.ToString();
-                Pat_agetextblock.Text = agePatProperty.GetValue(selectedItem)?.ToString();
-                Pat_phonetextblock.Text = phonePatProperty.GetValue(selectedItem)?.ToString();
+                // Get the selected item
+                var selectedItem = PatDataGrid.SelectedItem;
 
+                // Check if selectedItem is null
+                if (selectedItem != null)
+                {
+                    // Use reflection to get properties
+                    var idPatProperty = selectedItem.GetType().GetProperty("Id");
+                    var namePatProperty = selectedItem.GetType().GetProperty("Name");
+                    var fnamePatProperty = selectedItem.GetType().GetProperty("FamilyName");
+                    var agePatProperty = selectedItem.GetType().GetProperty("Age");
+                    var phonePatProperty = selectedItem.GetType().GetProperty("Phone");
+
+                    // Update UI with the retrieved values
+                    Pat_idtextbloc.Text = idPatProperty?.GetValue(selectedItem)?.ToString() ?? "N/A";
+                    Pat_nametextbloc.Text = namePatProperty?.GetValue(selectedItem)?.ToString() ?? "N/A";
+                    Pat_fnametextblock.Text = fnamePatProperty?.GetValue(selectedItem)?.ToString() ?? "N/A";
+                    Pat_agetextblock.Text = agePatProperty?.GetValue(selectedItem)?.ToString() ?? "N/A";
+                    Pat_phonetextblock.Text = phonePatProperty?.GetValue(selectedItem)?.ToString() ?? "N/A";
+                }
+                else
+                {
+                    // Handle case where no item is selected
+                    Pat_idtextbloc.Text = "No selection";
+                    Pat_nametextbloc.Text = "No selection";
+                    Pat_fnametextblock.Text = "No selection";
+                    Pat_agetextblock.Text = "No selection";
+                    Pat_phonetextblock.Text = "No selection";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Pat_idtextbloc.Text = "No selected";
-                Pat_nametextbloc.Text = "No selection";
-                Pat_fnametextblock.Text = "No selecttion";
-                Pat_agetextblock.Text = "No selecttion";
-                Pat_phonetextblock.Text = "No selecttion";
+                // Show error message
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
+
 
 
 
@@ -197,6 +204,8 @@ namespace Medical
             Pat_ClearInputFields();
 
         }
+
+
         private void DeletePatient_Click(object sender, RoutedEventArgs e)
         {
             if (pat_viewModel.SelectedPatient == null)
@@ -249,6 +258,60 @@ namespace Medical
             AddressTextBox.Clear();
             PhoneNumberTextBox.Clear();
         }
+
+        private void FilePatientUpload_Click(object sender, RoutedEventArgs e)
+        {
+           
+
+            if (pat_viewModel.SelectedPatient == null)
+            {
+                MessageBox.Show("Please select a patient first.");
+                return;
+            }
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                // Get the project directory's root (relative to the .exe startup location)
+                string projectDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../");
+                string patientFilesFolder = System.IO.Path.Combine(projectDirectory, "patient_files");
+
+                // Ensure the "patient_files" folder exists
+                if (!System.IO.Directory.Exists(patientFilesFolder))
+                {
+                    System.IO.Directory.CreateDirectory(patientFilesFolder);
+                }
+
+                // Create a folder for the selected patient using their name
+                string patientFolder = System.IO.Path.Combine(patientFilesFolder, pat_viewModel.SelectedPatient.Name);
+                if (!System.IO.Directory.Exists(patientFolder))
+                {
+                    System.IO.Directory.CreateDirectory(patientFolder);
+                }
+
+                // Copy the selected file to the patient's folder
+                string fileName = System.IO.Path.GetFileName(openFileDialog.FileName);
+                string destinationPath = System.IO.Path.Combine(patientFolder, fileName);
+
+                try
+                {
+                    System.IO.File.Copy(openFileDialog.FileName, destinationPath, overwrite: true);
+
+                    // Add the destination path to the patient's file list
+                    pat_viewModel.SelectedPatient.Files.Add(destinationPath);
+
+                    MessageBox.Show("File uploaded successfully.");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to upload file. Error: {ex.Message}");
+                }
+            }
+
+
+        }
+
+       
 
         //Doctor Block********************************************************
         public void LoadDoctors1()
@@ -677,10 +740,15 @@ namespace Medical
 
         }
 
+        private void CityTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
 
+        }
 
+        private void doctorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
-
+        }
     }
 
 
