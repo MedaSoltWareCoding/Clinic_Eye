@@ -9,15 +9,50 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="add.png" />
     <None Remove="application.png" />
     <None Remove="appointment.png" />
+    <None Remove="Approved-stamp-on-transparent-PNG.png" />
+    <None Remove="barcode.png" />
     <None Remove="bill.png" />
     <None Remove="budget.png" />
+    <None Remove="cancel.png" />
     <None Remove="doctor.png" />
     <None Remove="examination.png" />
+    <None Remove="generate.png" />
+    <None Remove="genIds\pescriptions" />
+    <None Remove="icons8-address-24.png" />
+    <None Remove="icons8-appointment-48 %281%29.png" />
+    <None Remove="icons8-appointment-48.png" />
+    <None Remove="icons8-appointment-50 %281%29.png" />
+    <None Remove="icons8-appointment-50.png" />
+    <None Remove="icons8-bill-64.png" />
+    <None Remove="icons8-check-list-48.png" />
+    <None Remove="icons8-date-24.png" />
+    <None Remove="icons8-delete-24.png" />
+    <None Remove="icons8-delete-48.png" />
+    <None Remove="icons8-doctor-50.png" />
+    <None Remove="icons8-done-64.png" />
+    <None Remove="icons8-glasses-50 %281%29.png" />
+    <None Remove="icons8-medicine-50.png" />
+    <None Remove="icons8-patient-50.png" />
+    <None Remove="icons8-phone-24.png" />
+    <None Remove="icons8-report-50.png" />
+    <None Remove="icons8-time-24.png" />
     <None Remove="medicine.png" />
     <None Remove="patient.png" />
+    <None Remove="pngtree-approved-blue-stamp-quality-badge-mark-vector-picture-image_9553892.png" />
+    <None Remove="print.png" />
+    <None Remove="save.png" />
+    <None Remove="Screenshot 2024-12-29 103548.png" />
+    <None Remove="search.png" />
     <None Remove="sunglasses.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="genIds\pescriptions">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -25,9 +60,37 @@
     <PackageReference Include="MaterialDesignInXamlToolkitAddOns" Version="0.0.6" />
     <PackageReference Include="MaterialDesignThemes" Version="5.1.0" />
     <PackageReference Include="MySql.Data" Version="9.1.0" />
+    <PackageReference Include="PDFsharp" Version="6.1.1" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.0" />
+    <PackageReference Include="ZXing.Net" Version="0.16.9" />
+    <PackageReference Include="ZXing.Net.Bindings.Windows.Compatibility" Version="0.16.12" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="add.png" />
+    <Resource Include="appointment.png" />
+    <Resource Include="Approved-stamp-on-transparent-PNG.png" />
+    <Resource Include="barcode.png" />
+    <Resource Include="cancel.png" />
+    <Resource Include="generate.png" />
+    <Resource Include="icons8-address-24.png" />
+    <Resource Include="icons8-appointment-48 (1).png" />
+    <Resource Include="icons8-appointment-48.png" />
+    <Resource Include="icons8-appointment-50 (1).png" />
+    <Resource Include="icons8-appointment-50.png" />
+    <Resource Include="icons8-bill-64.png" />
+    <Resource Include="icons8-check-list-48.png" />
+    <Resource Include="icons8-date-24.png" />
+    <Resource Include="icons8-delete-24.png" />
+    <Resource Include="icons8-delete-48.png" />
+    <Resource Include="icons8-doctor-50.png" />
+    <Resource Include="icons8-done-64.png" />
+    <Resource Include="icons8-glasses-50 (1).png" />
+    <Resource Include="icons8-medicine-50.png" />
+    <Resource Include="icons8-patient-50.png" />
+    <Resource Include="icons8-phone-24.png" />
+    <Resource Include="icons8-report-50.png" />
+    <Resource Include="icons8-time-24.png" />
     <Resource Include="images\application.png" />
     <Resource Include="images\appointment.png" />
     <Resource Include="images\bill.png" />
@@ -37,6 +100,11 @@
     <Resource Include="images\medicine.png" />
     <Resource Include="images\patient.png" />
     <Resource Include="images\sunglasses.png" />
+    <Resource Include="pngtree-approved-blue-stamp-quality-badge-mark-vector-picture-image_9553892.png" />
+    <Resource Include="print.png" />
+    <Resource Include="save.png" />
+    <Resource Include="Screenshot 2024-12-29 103548.png" />
+    <Resource Include="search.png" />
   </ItemGroup>
 
 </Project>

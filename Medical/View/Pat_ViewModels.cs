@@ -5,6 +5,7 @@ using System.Linq;
 using Medical.Datas;
 using Medical.Mod;
 using System.ComponentModel;
+using System.Windows.Controls;
 
 namespace Medical.View
 {
@@ -46,6 +47,8 @@ namespace Medical.View
             {
                 Patients.Add(patient);
             }
+
+ 
         }
 
         public void AddPatient(Patient patient)

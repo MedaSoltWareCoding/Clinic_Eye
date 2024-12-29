@@ -1,4 +1,6 @@
-﻿namespace Medical.Mod
+﻿using System.Windows.Controls;
+
+namespace Medical.Mod
 {
     public class Patient
     {
@@ -48,7 +50,23 @@
         public required int Id { get; set; }
         public required Patient patient { get; set; }
         public required DateTime date { get; set; }
+        public required DateTime time { get; set; }
         public int state { get; set; }
-        public String family { get; set; }
+    }
+
+    public class Pescription
+    {
+        public required int Id { get; set; }
+        public required Patient patient { get; set; }
+        public required Doctors doctor { get; set; }
+        public required DateTime date { get; set; }
+        public required List<Session> medcines  { get; set; }
+    }
+    public class Session
+    {
+        public required Medecine medecine { get; set; }
+        public required int pescriptionId { get; set; }
+        public required string descrition { get; set; }
+
     }
 }

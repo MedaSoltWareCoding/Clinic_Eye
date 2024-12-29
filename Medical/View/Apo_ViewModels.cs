@@ -5,6 +5,7 @@ using System.Linq;
 using Medical.Datas;
 using Medical.Mod;
 using System.ComponentModel;
+using System.Windows;
 
 namespace Medical.View
 {
@@ -54,8 +55,8 @@ namespace Medical.View
             try
             {
                 // Add the new patient to the database
-                databaseHelper.AddAppointment(app.Id, app.patient, app.date, app.state);
-
+                databaseHelper.AddAppointment(app.Id, app.patient, app.date, app.state,app.time);
+                //MessageBox.Show(app.time + "", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 // Refresh the patients list after adding
                 LoadAppointemnts();
             }
@@ -93,7 +94,7 @@ namespace Medical.View
             try
             {
                 // Update the appointemnt in the database
-                databaseHelper.UpdateAppointment(app.Id, app.patient, app.date, app.state);
+                databaseHelper.UpdateAppointment(app);
 
                 // Refresh the appointemnt list after updating
                 LoadAppointemnts();

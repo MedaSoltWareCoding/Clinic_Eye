@@ -6,6 +6,7 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using System.Drawing;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Medical.Datas
 {
@@ -24,6 +25,7 @@ namespace Medical.Datas
 
         {
 
+
             List<Appointment> appointments = new List<Appointment>();
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -33,20 +35,20 @@ namespace Medical.Datas
                     using (MySqlConnection conn = new MySqlConnection(connectionString))
                     {
                         conn.Open();
-                        string query = "SELECT * FROM appointment a , patient p where a.id_patient = p.id";
+                        string query = "SELECT * , p.id as patid FROM appointment a , patient p where a.id_patient = p.id order by a.date";
                         MySqlCommand cmd = new MySqlCommand(query, conn);
 
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-
+                 
                                 appointments.Add(new Appointment
                                 {
                                     Id = reader.GetInt32(0),
                                     patient = new Patient
                                     {
-                                        Id = reader.GetInt32(0),
+                                        Id = reader.GetInt32("patid"),
                                         Name = reader.GetString("pat_name"),
                                         FamilyName = reader.GetString("pat_fname"),
                                         Age = reader.GetInt32("pat_age"),
@@ -54,11 +56,16 @@ namespace Medical.Datas
                                         Birthday = reader.GetDateTime("pat_birthday"),
                                         City = reader.GetString("pat_city"),
                                         Address = reader.GetString("pat_adress"),
-                                        Phone = reader.GetString("pat_phone")
+                                        Phone = reader.GetString("pat_phone"),
+
+
                                     },
                                     date = reader.GetDateTime("date"),
                                     state = reader.GetInt32("state"),
-                          
+                                    time = reader.GetDateTime("time"),
+
+
+
                                 });
 
                             }
@@ -76,28 +83,30 @@ namespace Medical.Datas
 
 
 
-        public void AddAppointment(int Id, Patient patient, DateTime date, int state)
+        public void AddAppointment(int Id, Patient patient, DateTime date, int state , DateTime time)
         {
+            MessageBox.Show(time + "", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 try
                 {
+                    
                     connection.Open();
                     string query = @"INSERT INTO appointment 
-                                     (id_patient, date, state)
-                                     VALUES (@patient, @date, @state)";
+                                     (id_patient, date,time, state)
+                                     VALUES (@patient, @date,@time, @state)";
                     using (MySqlCommand cmd = new MySqlCommand(query, connection))
                     {
                         cmd.Parameters.AddWithValue("@patient", patient.Id);
                         cmd.Parameters.AddWithValue("@date", date);
                         cmd.Parameters.AddWithValue("@state", state);
-    
+                        cmd.Parameters.AddWithValue("@time", time);
                         cmd.ExecuteNonQuery();
                     }
                 }
                 catch (MySqlException ex)
                 {
-                    throw new Exception("Database error: " + ex.Message, ex);
+                    throw new Exception("Database appointment error: " + ex.Message, ex);
                 }
                 catch (Exception ex)
                 {
@@ -130,7 +139,7 @@ namespace Medical.Datas
                 }
             }
         }
-        public void UpdateAppointment(int id, Patient patient, DateTime date, int state)
+        public void UpdateAppointment(Appointment app)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -138,14 +147,14 @@ namespace Medical.Datas
                 {
                     connection.Open();
                     string query = @"UPDATE appointment 
-                             SET id_patient = @id_patient, date = @date, state = @state, 
+                             SET id_patient = @id_patient, date = @date, state = @state 
                              WHERE id = @id";
                     using (MySqlCommand cmd = new MySqlCommand(query, connection))
                     {
-                        cmd.Parameters.AddWithValue("@id", id);
-                        cmd.Parameters.AddWithValue("@id_patient", patient.Id);
-                        cmd.Parameters.AddWithValue("@date", date);
-                        cmd.Parameters.AddWithValue("@state", state);
+                        cmd.Parameters.AddWithValue("@id", app.Id);
+                        cmd.Parameters.AddWithValue("@id_patient", app.patient.Id);
+                        cmd.Parameters.AddWithValue("@date",app.date);
+                        cmd.Parameters.AddWithValue("@state",app.state);
                         cmd.ExecuteNonQuery();
                     }
                 }
