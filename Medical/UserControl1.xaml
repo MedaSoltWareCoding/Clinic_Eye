@@ -17,7 +17,7 @@
             </StackPanel.Effect>
             <StackPanel x:Name="tail" Width="14" Background="#FF0079EA"/>
 
-            <Image Source="/appointment.png" Height="30" Width="71" Margin="10,0,20,0"/>
+            <Image Source="/images/appointment.png" Height="30" Width="71" Margin="10,0,20,0"/>
             <StackPanel Height="59" Width="140">
                 <Viewbox Height="22" Width="136" Stretch="Fill">
                     <TextBlock x:Name="name" TextWrapping="Wrap" Text="TextBlock" FontSize="16" FontWeight="Bold" Height="21" Width="136"/>

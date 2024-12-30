@@ -1193,36 +1193,7 @@ namespace Medical
             }
 
         }
-        //private void ConvertToPdf()
-        //{
-        //    // Create the PDF document
-        //    PdfDocument pdfDocument = new PdfDocument();
-        //    PdfPage page = pdfDocument.AddPage();
-        //    XGraphics gfx = XGraphics.FromPdfPage(page);
-
-        //    // Capture the visual content of a WPF control (e.g., a Grid or Canvas)
-        //    RenderTargetBitmap rtb = new RenderTargetBitmap((int)pespgrid.ActualWidth, (int)pespgrid.ActualHeight, 96, 96, PixelFormats.Pbgra32);
-        //    //MessageBox.Show(rtb.Width + "," + rtb.Height, "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-        //    rtb.Render(pespgrid); // 'myGrid' is the WPF control to capture (replace with your control)
-
-        //    // Convert the captured content into an image and save it in the PDF
-        //    MemoryStream ms = new MemoryStream();
-        //    BitmapEncoder encoder = new PngBitmapEncoder();
-        //    encoder.Frames.Add(BitmapFrame.Create(rtb));
-        //    encoder.Save(ms);
-
-        //    // Create an XImage from the memory stream
-        //    XImage image = XImage.FromStream(ms);
-
-        //    // Draw the image in the PDF page
-        //    gfx.DrawImage(image, 0, 0);
-
-        //    // Save the PDF to a file
-        //    string filePath = "D:\\c# project\\Medical\\Medical\\patient_files\\output.pdf";
-        //    pdfDocument.Save(filePath);
-
-        //    MessageBox.Show("PDF saved successfully.");
-        //}
+    
         private void ConvertToPdf()
         {
             if (string.IsNullOrWhiteSpace(patientname.Text))
@@ -1263,14 +1234,14 @@ namespace Medical
 
             // Construct the folder path
             string baseFolder = "D:\\c# project\\Medical\\Medical\\patient_files";
-            string patientFolderName = $"{patientname.Text}_وصفات_{randomId}";
+            string patientFolderName = $"{patientname.Text}_وصفات_";
             string patientFolderPath = Path.Combine(baseFolder, patientFolderName);
 
             // Ensure the folder exists
             Directory.CreateDirectory(patientFolderPath);
 
             // Save the PDF with the patient name in the created folder
-            string pdfFileName = $"{patientname.Text}.pdf";
+            string pdfFileName = $"{pescription.patient.Name}_{pescription.Id}.pdf";
             string pdfFilePath = Path.Combine(patientFolderPath, pdfFileName);
             pdfDocument.Save(pdfFilePath);
 

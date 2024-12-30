@@ -64,7 +64,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="icons8-appointment-48 (1).png" />
     <Resource Include="images\appointment1.png" />
     <Resource Include="images\date.png" />
     <Resource Include="images\deleted.png" />
