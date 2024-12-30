@@ -41,3 +41,17 @@ D:\c# project\Medical\Medical\bin\Debug\net8.0-windows\runtimes\win-x64\native\k
 D:\c# project\Medical\Medical\bin\Debug\net8.0-windows\runtimes\win-x64\native\krb5_64.dll
 D:\c# project\Medical\Medical\bin\Debug\net8.0-windows\runtimes\win-x64\native\krbcc64.dll
 D:\c# project\Medical\Medical\obj\Debug\net8.0-windows\Medical.sourcelink.json
+D:\c# project\Medical\Medical\bin\Debug\net8.0-windows\Microsoft.Extensions.DependencyInjection.dll
+D:\c# project\Medical\Medical\bin\Debug\net8.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\c# project\Medical\Medical\bin\Debug\net8.0-windows\Microsoft.Extensions.Logging.dll
+D:\c# project\Medical\Medical\bin\Debug\net8.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+D:\c# project\Medical\Medical\bin\Debug\net8.0-windows\Microsoft.Extensions.Options.dll
+D:\c# project\Medical\Medical\bin\Debug\net8.0-windows\Microsoft.Extensions.Primitives.dll
+D:\c# project\Medical\Medical\bin\Debug\net8.0-windows\PdfSharp.Charting.dll
+D:\c# project\Medical\Medical\bin\Debug\net8.0-windows\PdfSharp.Quality.dll
+D:\c# project\Medical\Medical\bin\Debug\net8.0-windows\PdfSharp.Snippets.dll
+D:\c# project\Medical\Medical\bin\Debug\net8.0-windows\PdfSharp.System.dll
+D:\c# project\Medical\Medical\bin\Debug\net8.0-windows\PdfSharp.WPFonts.dll
+D:\c# project\Medical\Medical\bin\Debug\net8.0-windows\PdfSharp.dll
+D:\c# project\Medical\Medical\bin\Debug\net8.0-windows\de\PdfSharp.Charting.resources.dll
+D:\c# project\Medical\Medical\bin\Debug\net8.0-windows\de\PdfSharp.resources.dll

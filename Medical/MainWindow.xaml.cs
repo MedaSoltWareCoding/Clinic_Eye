@@ -10,6 +10,16 @@ using static MaterialDesignThemes.Wpf.Theme;
 using static MaterialDesignThemes.Wpf.Theme.ToolBar;
 using Button = System.Windows.Controls.Button;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Diagnostics;
+using MaterialDesignThemes.Wpf;
+using System.Windows.Input;
+using System.Reflection.PortableExecutable;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using PdfSharp.Pdf;
+using PdfSharp.Drawing;
+using System;
 namespace Medical
 {
     public partial class MainWindow : Window
@@ -20,7 +30,8 @@ namespace Medical
         private readonly Med_ViewModel   med_viewModel;
         private readonly AppointmenViewModel appo_viewmodel;
         private readonly Exm_ViewModel exm_viewModel;
-
+        private readonly string PatientFilesRoot = @"D:\c# project\Medical\Medical\patient_files";
+        private Stack<string> navigationHistory = new Stack<string>();
 
         public MainWindow()
 
@@ -61,6 +72,14 @@ namespace Medical
             doc_viewModel.LoadDoctors();
             appo_viewmodel.LoadAppointemnts();
             exm_viewModel.LoadExams();
+            if (!Directory.Exists(PatientFilesRoot))
+            {
+                Directory.CreateDirectory(PatientFilesRoot);
+            }
+
+            // Load the patient folders on startup
+            LoadPatientFolders();
+           
 
 
         }
@@ -95,7 +114,7 @@ namespace Medical
 
 
 
-
+       
 
 
         private void PatDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -117,18 +136,26 @@ namespace Medical
 
                     // Update UI with the retrieved values
                     Pat_idtextbloc.Text = idPatProperty?.GetValue(selectedItem)?.ToString() ?? "N/A";
+                    Pat_idtextbloc1.Text = idPatProperty?.GetValue(selectedItem)?.ToString() ?? "N/A";
                     Pat_nametextbloc.Text = namePatProperty?.GetValue(selectedItem)?.ToString() ?? "N/A";
                     Pat_fnametextblock.Text = fnamePatProperty?.GetValue(selectedItem)?.ToString() ?? "N/A";
+                    Pat_nametextbloc1.Text = namePatProperty?.GetValue(selectedItem)?.ToString() ?? "N/A";
+                    Pat_fnametextblock1.Text = fnamePatProperty?.GetValue(selectedItem)?.ToString() ?? "N/A";
                     Pat_agetextblock.Text = agePatProperty?.GetValue(selectedItem)?.ToString() ?? "N/A";
+                    Pat_agetextblock1.Text = agePatProperty?.GetValue(selectedItem)?.ToString() ?? "N/A";
                     Pat_phonetextblock.Text = phonePatProperty?.GetValue(selectedItem)?.ToString() ?? "N/A";
                 }
                 else
                 {
                     // Handle case where no item is selected
                     Pat_idtextbloc.Text = "No selection";
+                    Pat_idtextbloc.Text = "No selection";
                     Pat_nametextbloc.Text = "No selection";
                     Pat_fnametextblock.Text = "No selection";
+                    Pat_nametextbloc1.Text = "No selection";
+                    Pat_fnametextblock1.Text = "No selection";
                     Pat_agetextblock.Text = "No selection";
+                    Pat_agetextblock1.Text = "No selection";
                     Pat_phonetextblock.Text = "No selection";
                 }
             }
@@ -137,6 +164,8 @@ namespace Medical
                 // Show error message
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            
         }
 
 
@@ -283,7 +312,7 @@ namespace Medical
                 }
 
                 // Create a folder for the selected patient using their name
-                string patientFolder = System.IO.Path.Combine(patientFilesFolder, pat_viewModel.SelectedPatient.Name);
+                string patientFolder = System.IO.Path.Combine(patientFilesFolder, $"{pat_viewModel.SelectedPatient.Name}_ملف مرفوع");
                 if (!System.IO.Directory.Exists(patientFolder))
                 {
                     System.IO.Directory.CreateDirectory(patientFolder);
@@ -301,6 +330,7 @@ namespace Medical
                     pat_viewModel.SelectedPatient.Files.Add(destinationPath);
 
                     MessageBox.Show("File uploaded successfully.");
+                    LoadPatientFolders();
                 }
                 catch (Exception ex)
                 {
@@ -310,8 +340,164 @@ namespace Medical
 
 
         }
+        
 
+
+        private void UpdateFileList()
+        {
+            if (pat_viewModel.SelectedPatient == null)
+            {
+                FilesListView.ItemsSource = null;
+                return;
+            }
+
+            // Get the folder for the selected patient
+            string patientFolder = Path.Combine(PatientFilesRoot, pat_viewModel.SelectedPatient.Name);
+            if (!Directory.Exists(patientFolder))
+            {
+                Directory.CreateDirectory(patientFolder);
+            }
+
+            // List all files in the patient's folder
+            var files = Directory.GetFiles(patientFolder)
+                .Select(filePath => new
+                {
+                    FileName = Path.GetFileName(filePath),
+                    FullPath = filePath
+                });
+
+            FilesListView.ItemsSource = files;
+        }
        
+        private void LoadFilesInFolder(string folderPath)
+        {
+            // Save current path to history stack
+            navigationHistory.Push(folderPath);
+
+            // Show the Back button
+            BackButton.Visibility = Visibility.Visible;
+
+            // Get all files in the selected folder
+            var files = Directory.GetFiles(folderPath)
+                .Select(filePath => new
+                {
+                    FileName = Path.GetFileName(filePath),
+                    FullPath = filePath
+                });
+
+            // Bind the files to the ListView
+            FilesListView.ItemsSource = files;
+        }
+        private void FilesListView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (FilesListView.SelectedItem is null)
+            {
+                MessageBox.Show("No item selected.");
+                return;
+            }
+
+            // Get the full path of the selected item
+            var selectedItem = FilesListView.SelectedItem as dynamic;
+            string fullPath = selectedItem.FullPath;
+
+            if (Directory.Exists(fullPath))
+            {
+                // If the selected item is a folder, display its files
+                LoadFilesInFolder(fullPath);
+            }
+            else if (File.Exists(fullPath))
+            {
+                // If the selected item is a file, open it
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = fullPath,
+                    UseShellExecute = true
+                });
+            }
+        }
+        private void LoadPatientFolders()
+        {
+            // Clear navigation history and hide the Back button
+            navigationHistory.Clear();
+            BackButton.Visibility = Visibility.Collapsed;
+
+            // Get all patient folders
+            var patientFolders = Directory.GetDirectories(PatientFilesRoot)
+                .Select(folderPath => new
+                {
+                    FileName = Path.GetFileName(folderPath),
+                    FullPath = folderPath
+                });
+
+            // Bind the patient folders to the ListView
+            FilesListView.ItemsSource = patientFolders;
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (navigationHistory.Count > 0)
+            {
+                // Remove the last navigated folder
+                navigationHistory.Pop();
+
+                if (navigationHistory.Count == 0)
+                {
+                    // If no more history, load patient folders
+                    LoadPatientFolders();
+                }
+                else
+                {
+                    // Load the previous folder
+                    string previousFolder = navigationHistory.Peek();
+                    LoadFilesInFolder(previousFolder);
+                }
+            }
+        }
+        private void ExamDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+            
+        {
+            var selectedExam = ExamDataGrid.SelectedItem as Exams;
+            if (selectedExam != null)
+            {
+                // Set the values of the TextBoxes with the selected exam's properties
+                Dv_textbox.Text  = selectedExam.DV.ToString();
+                Nv_textbox.Text = selectedExam.NV.ToString();
+                Cv_textbox.Text = selectedExam.CV.ToString();
+                Sph_textbox.Text = selectedExam.SPH.ToString();
+                Cyl_textbox.Text = selectedExam.CYL.ToString();
+                Axis_textbox.Text = selectedExam.AXIS.ToString();
+                Pdp_textbox.Text = selectedExam.PDP.ToString();
+                Ndp_textbox.Text = selectedExam.NDP.ToString();
+                Ctr_textbox.Text = selectedExam.CTR.ToString();
+                Pho_textbox.Text = selectedExam.Phorias.ToString();
+                Stre_textbox.Text = selectedExam.Steropsis.ToString();
+                Cy_OS_textbox.Text= selectedExam.Cylinidrical_OS.ToString();
+                Cy_OD_textbox.Text = selectedExam.Cylinidrical_OD.ToString();
+                Sp_OS_textbox.Text = selectedExam.Spherical_OS.ToString() ;
+                Sp_OD_textbox.Text = selectedExam.Spherical_OD.ToString() ;
+                Ad_OS_textbox.Text = selectedExam.Add_power_OS.ToString();
+                Ad_OD_textbox.Text = selectedExam.Add_power_OD.ToString();
+                Ax_OS_textbox.Text = selectedExam.Axis_OS.ToString();
+                Ax_OD_textbox.Text = selectedExam.Axis_OD.ToString();
+                Bas_OS_textbox.Text = selectedExam.Base_cruve_OS.ToString();
+                Bas_OD_textbox.Text = selectedExam.Base_cruve_OD.ToString();
+                Di_OS_textbox.Text = selectedExam.Diameterer_OS.ToString();
+                Di_OD_textbox.Text = selectedExam.Diameterer_OD.ToString();
+                Po_OS_textbox.Text = selectedExam.Power_OS.ToString();
+                Po_OD_textbox.Text = selectedExam.Power_OD.ToString();
+                Brand_OS_textbox.Text = selectedExam.Brand_type_OS.ToString() ;
+                Brand_OD_textbox.Text = selectedExam.Brand_type_OD.ToString();
+
+                // Add other properties as needed
+            }
+
+           
+
+
+
+        }
+        
+
 
         //Doctor Block********************************************************
         public void LoadDoctors1()
@@ -584,7 +770,7 @@ namespace Medical
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
+        //Exams Block********************************************************
 
         public void AddExams_Click(object sender, RoutedEventArgs e)
         {
@@ -658,6 +844,113 @@ namespace Medical
             }
 
         }
+        public void ClearExams_Click(object sander, RoutedEventArgs e)
+        {
+            Exam_ClearInputFields();
+        }
+        public void PrintExams_Click(object sander, RoutedEventArgs e)
+        {
+            //string pdfFilePath = "D:\\c# project\\Medical\\Medical\\patient_files\\Exam.pdf";
+            string patientId = Pat_idtextbloc1.Text;
+            string patientName = Pat_nametextbloc1.Text;
+
+            // Validate the input for generating a valid file name
+            if (string.IsNullOrWhiteSpace(patientId) || string.IsNullOrWhiteSpace(patientName))
+            {
+                MessageBox.Show("Please ensure both Patient ID and Name fields are filled.");
+                return;
+            }
+
+            // Construct the file path dynamically
+            string folderPath = "D:\\c# project\\Medical\\Medical\\patient_files"; // Update to your desired folder path
+            string patientFolderName = $"{patientId}_{patientName}_فحص";
+            string patientFolderPath = Path.Combine(folderPath, patientFolderName);
+            Directory.CreateDirectory(patientFolderPath); // Create the folder if it doesn't exist
+            Random random = new Random();
+            double min = 10.0;
+            double max = 20.0;
+            double id = min + (random.NextDouble() * (max - min));
+            // Construct the file path for the PDF within the patient folder
+            string pdfFileName = $"{patientId}_{patientName}_{id}_فحص.pdf";
+            string pdfFilePath = Path.Combine(patientFolderPath, pdfFileName);
+
+            // Call the Export Method to generate the PDF
+            ExportWrapPanelToPdf( ExamPrint, pdfFilePath);
+
+            // Notify the user
+            MessageBox.Show("PDF exported successfully to: " + pdfFilePath);
+            LoadPatientFolders();
+
+        }
+        private void ExportWrapPanelToPdf(WrapPanel wrapPanel, string filePath)
+        {
+            if (wrapPanel == null)
+            {
+                MessageBox.Show("The WrapPanel is null. Ensure it's properly initialized.");
+                return;
+            }
+
+            // Step 1: Create a VisualBrush of the WrapPanel
+            var visualBrush = new VisualBrush(wrapPanel);
+            var visual = new DrawingVisual();
+
+            using (var drawingContext = visual.RenderOpen())
+            {
+                // Define the size of the drawing
+                drawingContext.DrawRectangle(visualBrush, null, new Rect(new Point(0, 0), new Size(wrapPanel.ActualWidth, wrapPanel.ActualHeight)));
+            }
+
+            // Step 2: Render the visual to a RenderTargetBitmap
+            var renderBitmap = new RenderTargetBitmap(
+                (int)Math.Ceiling(wrapPanel.ActualWidth),
+                (int)Math.Ceiling(wrapPanel.ActualHeight),
+                96, // DPI X
+                96, // DPI Y
+                PixelFormats.Pbgra32);
+            renderBitmap.Render(visual);
+
+            // Convert Rendered Bitmap to PNG
+            PngBitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(renderBitmap));
+            using (var stream = new MemoryStream())
+            {
+                encoder.Save(stream);
+                stream.Seek(0, SeekOrigin.Begin);
+
+                // Step 3: Create a PDF Document
+                PdfDocument pdfDocument = new PdfDocument();
+                PdfPage page = pdfDocument.AddPage();
+
+                // Set PDF page size
+                double pageWidth = XUnit.FromPoint(page.Width).Point;
+                double pageHeight = XUnit.FromPoint(page.Height).Point;
+
+                // Determine the scale to fit the content
+                double scaleX = pageWidth / wrapPanel.ActualWidth;
+                double scaleY = pageHeight / wrapPanel.ActualHeight;
+                double scale = Math.Min(scaleX, scaleY); // Maintain aspect ratio
+
+                // Calculate scaled dimensions
+                double scaledWidth = wrapPanel.ActualWidth * scale;
+                double scaledHeight = wrapPanel.ActualHeight * scale;
+
+                // Draw the Image on the PDF Page
+                using (XGraphics gfx = XGraphics.FromPdfPage(page))
+                {
+                    XImage img = XImage.FromStream(stream);
+                    gfx.DrawImage(img, 0, 0, scaledWidth, scaledHeight);
+                }
+
+                // Step 4: Save the PDF Document
+                pdfDocument.Save(filePath);
+            }
+        }
+        
+
+
+
+
+
 
         public void Exam_ClearInputFields()
         {
@@ -689,20 +982,6 @@ namespace Medical
             Pho_textbox.Clear();
             Stre_textbox.Clear();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
         public void LoadExam1()
         {
@@ -719,6 +998,7 @@ namespace Medical
         }
 
 
+        //textbox Block********************************************************
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {

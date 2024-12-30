@@ -14,16 +14,22 @@
     <None Remove="bill.png" />
     <None Remove="budget.png" />
     <None Remove="doctor.png" />
+    <None Remove="exam-time.png" />
     <None Remove="examination.png" />
+    <None Remove="folder.png" />
+    <None Remove="images\exam-time.png" />
+    <None Remove="images\folder.png" />
     <None Remove="images\paper.png" />
     <None Remove="images\pat.png" />
     <None Remove="images\pin.png" />
+    <None Remove="images\prescription.png" />
     <None Remove="images\time.png" />
     <None Remove="medicine.png" />
     <None Remove="paper.png" />
     <None Remove="pat.png" />
     <None Remove="patient.png" />
     <None Remove="pin.png" />
+    <None Remove="prescription.png" />
     <None Remove="sunglasses.png" />
     <None Remove="time.png" />
   </ItemGroup>
@@ -34,22 +40,32 @@
     <PackageReference Include="MaterialDesignThemes" Version="5.1.0" />
     <PackageReference Include="MaterialDesignThemes.Wpf" Version="1.0.1" />
     <PackageReference Include="MySql.Data" Version="9.1.0" />
+    <PackageReference Include="PDFsharp" Version="6.1.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="exam-time.png" />
     <Resource Include="images\application.png" />
     <Resource Include="images\appointment.png" />
     <Resource Include="images\bill.png" />
     <Resource Include="images\budget.png" />
     <Resource Include="images\doctor.png" />
+    <Resource Include="images\exam-time.png" />
     <Resource Include="images\examination.png" />
+    <Resource Include="images\folder.png" />
     <Resource Include="images\medicine.png" />
     <Resource Include="images\paper.png" />
     <Resource Include="images\pat.png" />
     <Resource Include="images\patient.png" />
     <Resource Include="images\pin.png" />
+    <Resource Include="images\prescription.png" />
     <Resource Include="images\sunglasses.png" />
     <Resource Include="images\time.png" />
+    <Resource Include="patient.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="patient_files\" />
   </ItemGroup>
 
 </Project>
