@@ -11,27 +11,45 @@
   <ItemGroup>
     <None Remove="application.png" />
     <None Remove="appointment.png" />
+    <None Remove="appointment1.png" />
     <None Remove="bill.png" />
     <None Remove="budget.png" />
+    <None Remove="date.png" />
+    <None Remove="deleted.png" />
     <None Remove="doctor.png" />
-    <None Remove="exam-time.png" />
+    <None Remove="done.png" />
+    <None Remove="email.png" />
     <None Remove="examination.png" />
     <None Remove="folder.png" />
+    <None Remove="icons8-address-24.png" />
+    <None Remove="icons8-appointment-48 %281%29.png" />
+    <None Remove="icons8-done-64.png" />
+    <None Remove="icons8-phone-24.png" />
+    <None Remove="images\appointment1.png" />
+    <None Remove="images\date.png" />
+    <None Remove="images\deleted.png" />
+    <None Remove="images\done.png" />
+    <None Remove="images\email.png" />
     <None Remove="images\exam-time.png" />
     <None Remove="images\folder.png" />
+    <None Remove="images\icons8-appointment-48 %281%29.png" />
+    <None Remove="images\icons8-phone-24.png" />
     <None Remove="images\paper.png" />
     <None Remove="images\pat.png" />
     <None Remove="images\pin.png" />
     <None Remove="images\prescription.png" />
+    <None Remove="images\search.png" />
     <None Remove="images\time.png" />
+    <None Remove="images\time1.png" />
     <None Remove="medicine.png" />
     <None Remove="paper.png" />
     <None Remove="pat.png" />
-    <None Remove="patient.png" />
     <None Remove="pin.png" />
     <None Remove="prescription.png" />
+    <None Remove="search.png" />
     <None Remove="sunglasses.png" />
     <None Remove="time.png" />
+    <None Remove="time1.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,27 +59,39 @@
     <PackageReference Include="MaterialDesignThemes.Wpf" Version="1.0.1" />
     <PackageReference Include="MySql.Data" Version="9.1.0" />
     <PackageReference Include="PDFsharp" Version="6.1.1" />
+    <PackageReference Include="ZXing.Net" Version="0.16.9" />
+    <PackageReference Include="ZXing.Net.Bindings.Windows.Compatibility" Version="0.16.12" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="exam-time.png" />
+    <Resource Include="icons8-appointment-48 (1).png" />
+    <Resource Include="images\appointment1.png" />
+    <Resource Include="images\date.png" />
+    <Resource Include="images\deleted.png" />
+    <Resource Include="images\done.png" />
+    <Resource Include="images\icons8-address-24.png" />
+    <Resource Include="images\icons8-appointment-48 (1).png" />
+    <Resource Include="images\icons8-done-64.png" />
     <Resource Include="images\application.png" />
     <Resource Include="images\appointment.png" />
     <Resource Include="images\bill.png" />
     <Resource Include="images\budget.png" />
     <Resource Include="images\doctor.png" />
+    <Resource Include="images\email.png" />
     <Resource Include="images\exam-time.png" />
     <Resource Include="images\examination.png" />
     <Resource Include="images\folder.png" />
+    <Resource Include="images\icons8-phone-24.png" />
     <Resource Include="images\medicine.png" />
     <Resource Include="images\paper.png" />
     <Resource Include="images\pat.png" />
     <Resource Include="images\patient.png" />
     <Resource Include="images\pin.png" />
     <Resource Include="images\prescription.png" />
+    <Resource Include="images\search.png" />
     <Resource Include="images\sunglasses.png" />
     <Resource Include="images\time.png" />
-    <Resource Include="patient.png" />
+    <Resource Include="images\time1.png" />
   </ItemGroup>
 
   <ItemGroup>
