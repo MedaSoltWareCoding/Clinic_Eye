@@ -14,6 +14,7 @@ using Dynamitey.Internal.Optimization;
 using Medical.Datas;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
+using System.Windows.Documents;
 
 namespace Medical
 {
@@ -73,6 +74,10 @@ namespace Medical
             doctorpewscriptionComboBox1 .SelectedIndex = 0;
             medlist.DataContext = med_viewModel;
             medlist .SelectedIndex = 0;
+
+            //certificate load --------------------------------->
+            patientcertaficatesComboBox.DataContext = pat_viewModel;
+            patientcertaficatesComboBox.SelectedIndex = 0;
         }
         public void MouseClick(Appointment app)
         {
@@ -928,8 +933,53 @@ namespace Medical
             }
 
         }
+
+
+        private void Addcertaficate(object sender, RoutedEventArgs e)
+        {
+            patientnamecertaficate.Text = ((Patient)patientcertaficatesComboBox.SelectedValue).ToString();
+            patientagecertaficate.Text = ((Patient)patientcertaficatesComboBox.SelectedValue).Age + "ans";
+            //--------------------------------------------------------------------
+            mystack_certaficate.Children.Clear();
+
+            // Get the FlowDocument from the RichTextBox
+            FlowDocument flowDocument = certaficateText.Document;
+
+            // Loop through each block (paragraphs) in the FlowDocument
+            try
+            {
+                foreach (var block in flowDocument.Blocks)
+                {
+                    if (block is Paragraph paragraph)
+                    {
+                        // Create a new TextBlock for this paragraph
+                        TextBlock paragraphTextBlock = new TextBlock
+                        {
+                            TextWrapping = TextWrapping.Wrap
+                        };
+
+                        // Add each Inline element from the paragraph to the TextBlock
+                        foreach (Inline inline in ((Paragraph)block).Inlines.ToList())
+                        {
+                            Inline inl = inline;
+                            // You can directly add the Inlines (formatted text) to the TextBlock
+                            paragraphTextBlock.Inlines.Add(inl);
+                        }
+                        MessageBox.Show(paragraphTextBlock.Inlines.Count+"", "Error", MessageBoxButton.OK);
+
+                        // Add the TextBlock to the StackPanel
+                        certaficatecontent.Children.Add(paragraphTextBlock);
+                    }
+                }
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK);
+            }
+        }
+ 
     }
 }
+
 
 
 
