@@ -28,7 +28,7 @@ namespace Medical.Mod
         public required int Age_doc { get; set; }
         public required string Phone_doc { get; set; }
         public required string Adress_doc { get; set; }
-        public required string Branch_doc {get; set;}
+        public required string Branch_doc { get; set; }
         public override string ToString()
         {
             return this.Name_doc + "," + this.Familyname_doc;
@@ -42,7 +42,7 @@ namespace Medical.Mod
         public required string Name_med { get; set; }
         public required string Descreption_med { get; set; }
         public required string dosage_me { get; set; }
-       
+
     }
 
     public class Appointment
@@ -60,13 +60,22 @@ namespace Medical.Mod
         public required Patient patient { get; set; }
         public required Doctors doctor { get; set; }
         public required DateTime date { get; set; }
-        public required List<Session> medcines  { get; set; }
+        public required List<Session> medcines { get; set; }
     }
     public class Session
     {
         public required Medecine medecine { get; set; }
         public required int pescriptionId { get; set; }
         public required string descrition { get; set; }
+
+    }
+
+    public class Certaficate()
+    {
+        public required int Id { get; set; }
+        public required Patient patient { get; set; }
+        public required string contant { get; set; }
+        public required DateTime date { get; set; }
 
     }
 }

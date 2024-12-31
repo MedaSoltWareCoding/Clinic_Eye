@@ -108,3 +108,9 @@ C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\PdfSharp.WP
 C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\PdfSharp.dll
 C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\de\PdfSharp.Charting.resources.dll
 C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\de\PdfSharp.resources.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\MigraDoc.DocumentObjectModel.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\MigraDoc.Rendering.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\MigraDoc.RtfRendering.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\de\MigraDoc.DocumentObjectModel.resources.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\de\MigraDoc.Rendering.resources.dll
+C:\Users\PC\Source\Repos\Clinic_Eye\Medical\bin\Debug\net8.0-windows\de\MigraDoc.RtfRendering.resources.dll

@@ -15,12 +15,17 @@ using Medical.Datas;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using System.Windows.Documents;
+using System.Reflection.Metadata;
+using MigraDoc.DocumentObjectModel;
+using MigraDoc.Rendering;
+using System.Data;
 
 namespace Medical
 {
     public partial class MainWindow : Window
     {
         public Pescription pescription = null;
+        public Certaficate certaficate = null;
         public Appointment? selected = null;
         private readonly Patient_ViewModel pat_viewModel;
         private readonly Doctor_ViewModel  doc_viewModel;
@@ -98,7 +103,8 @@ namespace Medical
                     patientComboBox.SelectedIndex = p;
 
                 DateOfappointemnt.SelectedDate = app.date;
-                selected = app;
+                apptime.SelectedTime = app.time;
+                selected = app; 
 
             }
 
@@ -448,7 +454,7 @@ namespace Medical
                         {
                             TextBlock textBlock = new TextBlock();
                             textBlock.Text = app.date.ToString("MMMM dd, yyyy");
-                            textBlock.Foreground = new SolidColorBrush(Colors.Gray);
+                            textBlock.Foreground = new SolidColorBrush(System.Windows.Media.Colors.Gray);
                             textBlock.HorizontalAlignment = HorizontalAlignment.Right;
                             textBlock.Margin = new Thickness(20);
                             mystack_.Children.Add(textBlock);
@@ -460,7 +466,7 @@ namespace Medical
                     {
                         TextBlock textBlock = new TextBlock();
                         textBlock.Text = app.date.ToString("MMMM dd, yyyy");
-                        textBlock.Foreground = new SolidColorBrush(Colors.Gray);
+                        textBlock.Foreground = new SolidColorBrush(System.Windows.Media.Colors.Gray);
                         textBlock.HorizontalAlignment = HorizontalAlignment.Right;
                         textBlock.Margin = new Thickness(20);
                         mystack_.Children.Add(textBlock);
@@ -544,6 +550,7 @@ namespace Medical
             {   
                     selected.date = (DateTime)DateOfappointemnt.SelectedDate;
                     selected.patient = (Patient)patientComboBox.SelectedValue;
+                    selected.time = (DateTime)apptime.SelectedTime;
 
                 appo_viewmodel.UpdatePatient(selected);
                 LoadAppointments1();
@@ -620,7 +627,7 @@ namespace Medical
                         {
                             TextBlock textBlock = new TextBlock();
                             textBlock.Text = app.date.ToString("MMMM dd, yyyy");
-                            textBlock.Foreground = new SolidColorBrush(Colors.Gray);
+                            textBlock.Foreground = new SolidColorBrush(System.Windows.Media.Colors.Gray);
                             textBlock.HorizontalAlignment = HorizontalAlignment.Right;
                             textBlock.Margin = new Thickness(20);
                             mystack_.Children.Add(textBlock);
@@ -632,7 +639,7 @@ namespace Medical
                     {
                         TextBlock textBlock = new TextBlock();
                         textBlock.Text = app.date.ToString("MMMM dd, yyyy");
-                        textBlock.Foreground = new SolidColorBrush(Colors.Gray);
+                        textBlock.Foreground = new SolidColorBrush(System.Windows.Media.Colors.Gray);
                         textBlock.HorizontalAlignment = HorizontalAlignment.Right;
                         textBlock.Margin = new Thickness(20);
                         mystack_.Children.Add(textBlock);
@@ -781,7 +788,7 @@ namespace Medical
                     try
                     {
                         data_Pescription.AddPescription(pescription);
-                        ConvertToPdf();
+                        ConvertToPdf(pespgrid,"output.pdf");
                         //clear the page if done-------------------------
 
                         pescriptioncontent.Children.Clear();
@@ -812,7 +819,7 @@ namespace Medical
         }
 
         // Convert the WPF UI to a PDF
-        private void ConvertToPdf()
+        private void ConvertToPdf(Grid grido ,string path)
         {
             // Create the PDF document
             PdfDocument pdfDocument = new PdfDocument();
@@ -820,9 +827,9 @@ namespace Medical
             XGraphics gfx = XGraphics.FromPdfPage(page);
 
             // Capture the visual content of a WPF control (e.g., a Grid or Canvas)
-            RenderTargetBitmap rtb = new RenderTargetBitmap((int)pespgrid.ActualWidth, (int)pespgrid.ActualHeight, 96 ,96, PixelFormats.Pbgra32);
+            RenderTargetBitmap rtb = new RenderTargetBitmap((int)grido.ActualWidth, (int)grido.ActualHeight, 96 ,96, PixelFormats.Pbgra32);
             //MessageBox.Show(rtb.Width + "," + rtb.Height, "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            rtb.Render(pespgrid); // 'myGrid' is the WPF control to capture (replace with your control)
+            rtb.Render(grido); // 'myGrid' is the WPF control to capture (replace with your control)
 
             // Convert the captured content into an image and save it in the PDF
             MemoryStream ms = new MemoryStream();
@@ -838,7 +845,7 @@ namespace Medical
 
             // Save the PDF to a file
             string filePath = "output.pdf";
-            pdfDocument.Save(filePath);
+            pdfDocument.Save(path);
 
             MessageBox.Show("PDF saved successfully.");
         }
@@ -857,7 +864,7 @@ namespace Medical
                 row.Margin = new Thickness(15, 15, 15, 15);
                 row.HorizontalAlignment = HorizontalAlignment.Center;
                 row.Height = 20;
-                row.Orientation = Orientation.Horizontal;
+                row.Orientation = System.Windows.Controls.Orientation.Horizontal;
                 TextBlock medName = new TextBlock();
                 medName.Width = 300;
                 medName.Text = item.medecine.Name_med;
@@ -934,13 +941,31 @@ namespace Medical
 
         }
 
-
         private void Addcertaficate(object sender, RoutedEventArgs e)
         {
-            patientnamecertaficate.Text = ((Patient)patientcertaficatesComboBox.SelectedValue).ToString();
-            patientagecertaficate.Text = ((Patient)patientcertaficatesComboBox.SelectedValue).Age + "ans";
+            int id = gen.generateid("certaficates");
+            TextRange textRange = new TextRange(certaficateText.Document.ContentStart, certaficateText.Document.ContentEnd);
+            certaficate = new Certaficate
+            {
+                Id = id,
+                patient = (Patient)patientcertaficatesComboBox.SelectedValue,
+                contant = textRange.Text,
+                date = DateTime.Now,
+
+            };
+            patientnamecertaficate.Text = certaficate.patient.ToString();
+            patientagecertaficate.Text = certaficate.patient.Age + "ans";
+            datecertificate.Text = certaficate.date.ToString("d");
+            try
+            {
+                barcodecertaficate.Source = gen.GenerateQRCode(gen.generateid("certaficates").ToString("D14"));
+
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK);
+            }
             //--------------------------------------------------------------------
-            mystack_certaficate.Children.Clear();
+            certaficatecontent.Children.Clear();
 
             // Get the FlowDocument from the RichTextBox
             FlowDocument flowDocument = certaficateText.Document;
@@ -948,38 +973,52 @@ namespace Medical
             // Loop through each block (paragraphs) in the FlowDocument
             try
             {
-                foreach (var block in flowDocument.Blocks)
+                foreach (Block block in flowDocument.Blocks.ToList())
                 {
-                    if (block is Paragraph paragraph)
+                    if (block is System.Windows.Documents.Paragraph paragraph)
                     {
                         // Create a new TextBlock for this paragraph
                         TextBlock paragraphTextBlock = new TextBlock
                         {
                             TextWrapping = TextWrapping.Wrap
                         };
+                        paragraphTextBlock.Margin = new Thickness(0, 0, 0, 20);
 
                         // Add each Inline element from the paragraph to the TextBlock
-                        foreach (Inline inline in ((Paragraph)block).Inlines.ToList())
+                        foreach (Inline inline in paragraph.Inlines.ToList())
                         {
-                            Inline inl = inline;
+                         
                             // You can directly add the Inlines (formatted text) to the TextBlock
-                            paragraphTextBlock.Inlines.Add(inl);
+                            paragraphTextBlock.Inlines.Add(inline);
                         }
-                        MessageBox.Show(paragraphTextBlock.Inlines.Count+"", "Error", MessageBoxButton.OK);
 
                         // Add the TextBlock to the StackPanel
                         certaficatecontent.Children.Add(paragraphTextBlock);
                     }
+                    else {
+                        
+                    }
                 }
+       
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK);
             }
         }
- 
+
+        private void Savecertaficate(object sender, RoutedEventArgs e)
+        {
+            if (certaficateText != null) {
+                new Data_Certaficate("localhost", "clinics", "root", "").AddCertaficate(certaficate);
+                ConvertToPdf(certagrid, "certaficate.pdf"); 
+                certaficatecontent.Children.Clear ();
+                patientnamecertaficate.Text = "";
+                patientagecertaficate.Text = "";
+                datecertificate.Text = "";
+                barcodecertaficate.Source = null;
+            }
+
+        }
     }
 }
-
-
-
-

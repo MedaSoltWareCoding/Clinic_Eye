@@ -147,7 +147,7 @@ namespace Medical.Datas
                 {
                     connection.Open();
                     string query = @"UPDATE appointment 
-                             SET id_patient = @id_patient, date = @date, state = @state 
+                             SET id_patient = @id_patient, date = @date ,time = @time, state = @state 
                              WHERE id = @id";
                     using (MySqlCommand cmd = new MySqlCommand(query, connection))
                     {
@@ -155,6 +155,7 @@ namespace Medical.Datas
                         cmd.Parameters.AddWithValue("@id_patient", app.patient.Id);
                         cmd.Parameters.AddWithValue("@date",app.date);
                         cmd.Parameters.AddWithValue("@state",app.state);
+                        cmd.Parameters.AddWithValue("@time",app.time);
                         cmd.ExecuteNonQuery();
                     }
                 }
