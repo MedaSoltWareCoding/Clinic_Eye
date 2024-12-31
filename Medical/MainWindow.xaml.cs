@@ -28,6 +28,7 @@ namespace Medical
     {
         public Pescription pescription = null;
         public Appointment? selected = null;
+        public Certaficate certaficate = null;
         private readonly Patient_ViewModel pat_viewModel;
         private readonly Doctor_ViewModel  doc_viewModel;
         private readonly Med_ViewModel   med_viewModel;
@@ -88,6 +89,9 @@ namespace Medical
             patientcertaficatesComboBox.SelectedIndex = 0;
 
             //doctorComboBox.ItemsSource = items.Where(item => item.Name_doc != "NewPlaceholder").ToList();
+            //certificate load --------------------------------->
+            patientcertaficatesComboBox.DataContext = pat_viewModel;
+            patientcertaficatesComboBox.SelectedIndex = 0;
 
             med_viewModel.LoadMedecines();
             pat_viewModel.LoadPatients();
@@ -108,34 +112,34 @@ namespace Medical
 
 
 
-        private void DocDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            // Get the selected item
-            var selectedItem = DocDataGrid.SelectedItem;
+       private void DocDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+{
+    // Get the selected item
+    var selectedItem = DocDataGrid.SelectedItem;
 
-            var nameDocProperty = selectedItem.GetType().GetProperty("Name_doc");
-            var fnameDocProprety = selectedItem.GetType().GetProperty("Familyname_doc");
-            var ageDocPropreety = selectedItem.GetType().GetProperty("Age_doc");
-            var branchProprety = selectedItem.GetType().GetProperty("Branch_doc");
+    if (selectedItem != null)
+    {
+        // Safely get the properties of the selected item
+        var nameDocProperty = selectedItem.GetType().GetProperty("Name_doc");
+        var fnameDocProperty = selectedItem.GetType().GetProperty("Familyname_doc");
+        var ageDocProperty = selectedItem.GetType().GetProperty("Age_doc");
+        var branchProperty = selectedItem.GetType().GetProperty("Branch_doc");
 
-            if (selectedItem != null)
-            {
-                // Convert the selected item to a string
-                //textBlock.Text = selectedItem.ToString();
-                NametextBlock.Text = nameDocProperty.GetValue(selectedItem)?.ToString();
-                FnametextBlock.Text = fnameDocProprety.GetValue(selectedItem)?.ToString();
-                AgetextBlock.Text = ageDocPropreety.GetValue(selectedItem)?.ToString();
-                BranchtextBlock.Text = branchProprety.GetValue(selectedItem)?.ToString();
-
-            }
-            else
-            {
-                NametextBlock.Text = "No selection";
-                FnametextBlock.Text = "No selecttion";
-                AgetextBlock.Text = "No selecttion";
-                BranchtextBlock.Text = "No selecttion";
-            }
-        }
+        // Safely retrieve the values of the properties and update the TextBlocks
+        NametextBlock.Text = nameDocProperty?.GetValue(selectedItem)?.ToString() ?? "No Data";
+        FnametextBlock.Text = fnameDocProperty?.GetValue(selectedItem)?.ToString() ?? "No Data";
+        AgetextBlock.Text = ageDocProperty?.GetValue(selectedItem)?.ToString() ?? "No Data";
+        BranchtextBlock.Text = branchProperty?.GetValue(selectedItem)?.ToString() ?? "No Data";
+    }
+    else
+    {
+        // If no selection, set default messages
+        NametextBlock.Text = "No selection";
+        FnametextBlock.Text = "No selection";
+        AgetextBlock.Text = "No selection";
+        BranchtextBlock.Text = "No selection";
+    }
+}
 
 
 
@@ -746,19 +750,6 @@ namespace Medical
         {
 
         }
-
-        //public void LoadAppointments1()
-        //{
-        //    try
-        //    {
-        //        appo_viewmodel.LoadAppointemnts();
-        //        //MessageBox.Show("Patients loaded successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-        //    }
-        //    catch (System.Exception ex)
-        //    {
-        //        MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //    }
-        //}
         public void LoadAppointments1()
         {
             mystack_.Children.Clear();
@@ -802,8 +793,6 @@ namespace Medical
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-
         //private void AddAppointment_Click(object sender, RoutedEventArgs e)
         //{
         //    try
@@ -878,48 +867,7 @@ namespace Medical
                 }
             }
         }
-        //private void DeleteAppointment_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (appointmentsDataGrid.SelectedItem == null)
-        //    {
-        //        MessageBox.Show("Please select a patient to delete.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-        //        return;
-        //    }
-
-        //    var result = MessageBox.Show("Are you sure you want to delete this appointemnt?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-        //    if (result == MessageBoxResult.Yes)
-        //    {
-        //        try
-        //        {
-        //            appo_viewmodel.DeleteAppointment((Appointment)appointmentsDataGrid.SelectedItem);
-        //            MessageBox.Show("Patient deleted successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //        }
-        //    }
-        //}
-        //private void UpdateAppointment_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (pat_viewModel.SelectedPatient == null)
-        //    {
-        //        MessageBox.Show("Please select a patient to update.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-        //        return;
-        //    }
-
-        //    // Update logic can be tied to input fields or a modal dialog
-        //    try
-        //    {
-        //        Patient updatedPatient = pat_viewModel.SelectedPatient; // Example: Edit in-place
-        //        pat_viewModel.UpdatePatient(updatedPatient);
-        //        MessageBox.Show("Patient updated successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //    }
-        //}
+      
         public void UpdateAppointment_state(Appointment app)
         {
             if (app == null)
@@ -1334,48 +1282,7 @@ namespace Medical
             }
 
         }
-        private void Addcertaficate(object sender, RoutedEventArgs e)
-        {
-            patientnamecertaficate.Text = ((Patient)patientcertaficatesComboBox.SelectedValue).ToString();
-            patientagecertaficate.Text = ((Patient)patientcertaficatesComboBox.SelectedValue).Age + "ans";
-            //--------------------------------------------------------------------
-            mystack_certaficate.Children.Clear();
-
-            // Get the FlowDocument from the RichTextBox
-            FlowDocument flowDocument = certaficateText.Document;
-
-            // Loop through each block (paragraphs) in the FlowDocument
-            try
-            {
-                foreach (var block in flowDocument.Blocks)
-                {
-                    if (block is Paragraph paragraph)
-                    {
-                        // Create a new TextBlock for this paragraph
-                        TextBlock paragraphTextBlock = new TextBlock
-                        {
-                            TextWrapping = TextWrapping.Wrap
-                        };
-
-                        // Add each Inline element from the paragraph to the TextBlock
-                        foreach (Inline inline in ((Paragraph)block).Inlines.ToList())
-                        {
-                            Inline inl = inline;
-                            // You can directly add the Inlines (formatted text) to the TextBlock
-                            paragraphTextBlock.Inlines.Add(inl);
-                        }
-                        MessageBox.Show(paragraphTextBlock.Inlines.Count + "", "Error", MessageBoxButton.OK);
-
-                        // Add the TextBlock to the StackPanel
-                        certaficatecontent.Children.Add(paragraphTextBlock);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK);
-            }
-        }
+       
         private void DeleteApoiment_Click(object sender, RoutedEventArgs e)
         {
             if (selected.patient == null)
@@ -1574,12 +1481,6 @@ namespace Medical
                 pdfDocument.Save(filePath);
             }
         }
-        
-
-
-
-
-
 
         public void Exam_ClearInputFields()
         {
@@ -1625,6 +1526,159 @@ namespace Medical
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        //Certeficate Block********************************************************
+        private void Addcertaficate(object sender, RoutedEventArgs e)
+        {
+            int id = gen.generateid("certaficates");
+            TextRange textRange = new TextRange(certaficateText.Document.ContentStart, certaficateText.Document.ContentEnd);
+            certaficate = new Certaficate
+            {
+                Id = id,
+                patient = (Patient)patientcertaficatesComboBox.SelectedValue,
+                contant = textRange.Text,
+                date = DateTime.Now,
+
+            };
+            patientnamecertaficate.Text = certaficate.patient.ToString();
+            patientagecertaficate.Text = certaficate.patient.Age + "ans";
+            datecertificate.Text = certaficate.date.ToString("d");
+            try
+            {
+                barcodecertaficate.Source = gen.GenerateQRCode(gen.generateid("certaficates").ToString("D14"));
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK);
+            }
+            //--------------------------------------------------------------------
+            certaficatecontent.Children.Clear();
+
+            // Get the FlowDocument from the RichTextBox
+            FlowDocument flowDocument = certaficateText.Document;
+
+            // Loop through each block (paragraphs) in the FlowDocument
+            try
+            {
+                foreach (Block block in flowDocument.Blocks.ToList())
+                {
+                    if (block is System.Windows.Documents.Paragraph paragraph)
+                    {
+                        // Create a new TextBlock for this paragraph
+                        TextBlock paragraphTextBlock = new TextBlock
+                        {
+                            TextWrapping = TextWrapping.Wrap
+                        };
+                        paragraphTextBlock.Margin = new Thickness(0, 0, 0, 20);
+
+                        // Add each Inline element from the paragraph to the TextBlock
+                        foreach (Inline inline in paragraph.Inlines.ToList())
+                        {
+
+                            // You can directly add the Inlines (formatted text) to the TextBlock
+                            paragraphTextBlock.Inlines.Add(inline);
+                        }
+
+                        // Add the TextBlock to the StackPanel
+                        certaficatecontent.Children.Add(paragraphTextBlock);
+                    }
+                    else
+                    {
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK);
+            }
+        }
+
+        
+        private void Savecertaficate(object sender, RoutedEventArgs e)
+        {
+            if (certaficateText != null)
+            {
+                // Add the certificate to the database
+                new Data_Certaficate("localhost", "clinics", "root", "").AddCertaficate(certaficate);
+
+                // Save the PDF with patient info and mystack_certaficate content
+                SaveCertificatePdf();
+
+                // Clear the certificate form
+                certaficatecontent.Children.Clear();
+                patientnamecertaficate.Text = "";
+                patientagecertaficate.Text = "";
+                datecertificate.Text = "";
+                barcodecertaficate.Source = null;
+            }
+        }
+
+        private void SaveCertificatePdf()
+        {
+            // Ensure the patient information is available
+            if (string.IsNullOrWhiteSpace(patientnamecertaficate.Text) || string.IsNullOrWhiteSpace(datecertificate.Text))
+            {
+                MessageBox.Show("Patient Name or ID is missing. Please check the details.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Get the patient details
+            string patientName = patientnamecertaficate.Text.Trim();
+            string patientId = patientid.Text.Trim();
+
+            // Create the directory for patient files
+            string folderPath = Path.Combine("D:\\c# project\\Medical\\Medical\\patient_files", $"{patientName}_شهادة_{patientId}");
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            // Define the PDF file name
+            string pdfFileName = Path.Combine(folderPath, $"{patientName}.pdf");
+
+            // Create the PDF document
+            PdfDocument pdfDocument = new PdfDocument();
+            PdfPage page = pdfDocument.AddPage();
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+
+            // Render the mystack_certaficate content
+            var mystackCertaficateImage = RenderVisualToImage(mystack_certaficate);
+            if (mystackCertaficateImage != null)
+            {
+                // Draw the content on the PDF page
+                gfx.DrawImage(XImage.FromStream(mystackCertaficateImage), 0, 0, page.Width, page.Height);
+            }
+
+            // Save the PDF file
+            pdfDocument.Save(pdfFileName);
+
+            MessageBox.Show($"PDF saved successfully at: {pdfFileName}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            LoadPatientFolders();
+        }
+
+        private MemoryStream RenderVisualToImage(FrameworkElement visual)
+        {
+            // Render the visual to a RenderTargetBitmap
+            var renderBitmap = new RenderTargetBitmap(
+                (int)Math.Ceiling(visual.ActualWidth),
+                (int)Math.Ceiling(visual.ActualHeight),
+                96, // DPI X
+                96, // DPI Y
+                PixelFormats.Pbgra32);
+            renderBitmap.Render(visual);
+
+            // Encode the bitmap to a PNG stream
+            var encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(renderBitmap));
+            var stream = new MemoryStream();
+            encoder.Save(stream);
+            stream.Seek(0, SeekOrigin.Begin);
+
+            return stream;
+            
+        }
 
 
         //textbox Block********************************************************
@@ -1634,10 +1688,6 @@ namespace Medical
 
         }
 
-        //private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
-        //{
-
-        //}
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {

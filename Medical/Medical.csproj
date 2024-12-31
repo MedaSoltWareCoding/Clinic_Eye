@@ -39,6 +39,7 @@
     <None Remove="images\pin.png" />
     <None Remove="images\prescription.png" />
     <None Remove="images\search.png" />
+    <None Remove="images\stamp.png" />
     <None Remove="images\time.png" />
     <None Remove="images\time1.png" />
     <None Remove="medicine.png" />
@@ -47,6 +48,7 @@
     <None Remove="pin.png" />
     <None Remove="prescription.png" />
     <None Remove="search.png" />
+    <None Remove="stamp.png" />
     <None Remove="sunglasses.png" />
     <None Remove="time.png" />
     <None Remove="time1.png" />
@@ -88,9 +90,11 @@
     <Resource Include="images\pin.png" />
     <Resource Include="images\prescription.png" />
     <Resource Include="images\search.png" />
+    <Resource Include="images\stamp.png" />
     <Resource Include="images\sunglasses.png" />
     <Resource Include="images\time.png" />
     <Resource Include="images\time1.png" />
+    <Resource Include="prescription.png" />
   </ItemGroup>
 
   <ItemGroup>

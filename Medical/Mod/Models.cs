@@ -104,6 +104,15 @@ namespace Medical.Mod
 
     }
 
+    public class Certaficate()
+    {
+        public required int Id { get; set; }
+        public required Patient patient { get; set; }
+        public required string contant { get; set; }
+        public required DateTime date { get; set; }
+
+    }
+
 
 
 }

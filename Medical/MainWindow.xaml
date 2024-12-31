@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Medical"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="Medical.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Width="1223" Height="795"
+        Title="MainWindow" Width="1470" Height="909"
         WindowStartupLocation="CenterScreen"
        
         MinWidth="800"
@@ -187,7 +187,7 @@
                         <TextBlock Text="الملفات"/>
                     </StackPanel>
                 </Button>
-                <Button  Height="59" Margin="0,10,0,0" Background="#0078D7" Foreground="White" FontSize="16" Tag="التقارير" Click="OpenTab" Width="64">
+                <Button  Height="59" Margin="0,10,0,0" Background="#0078D7" Foreground="White" FontSize="16" Tag="الوصفات" Click="OpenTab" Width="64">
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">
                             <Border Background="{TemplateBinding Background}" BorderBrush="#0078D7" BorderThickness="1" CornerRadius="10">
@@ -196,11 +196,11 @@
                         </ControlTemplate>
                     </Button.Template>
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                        <Image Source="images/application.png" Width="40" Height="30"/>
-                        <TextBlock Text="التقارير"/>
+                        <Image Source="/prescription.png" Width="40" Height="30"/>
+                        <TextBlock Text="الوصفات"/>
                     </StackPanel>
                 </Button>
-                <Button Height="59" Background="#0078D7" Foreground="White" FontSize="16" Tag="النظارات" Click="OpenTab" Width="64" Margin="0,10,0,0">
+                <Button Height="59" Background="#0078D7" Foreground="White" FontSize="16" Tag="شهادة" Click="OpenTab" Width="64" Margin="0,10,0,0">
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">
                             <Border Background="{TemplateBinding Background}" BorderBrush="#0078D7" BorderThickness="1" CornerRadius="10">
@@ -209,8 +209,8 @@
                         </ControlTemplate>
                     </Button.Template>
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                        <Image Source="images/sunglasses.png" Width="40" Height="30"/>
-                        <TextBlock Text="النظارات"/>
+                        <Image Source="/images/stamp.png" Width="40" Height="30"/>
+                        <TextBlock Text="شهادة"/>
                     </StackPanel>
                 </Button>
                 <Button Height="59" Margin="0,10,0,0" Background="#0078D7" Foreground="White" Tag="التكاليف" Click="OpenTab" Width="64">
@@ -718,7 +718,7 @@ HorizontalAlignment="Right" TextAlignment="Right"/>
                 </TabItem>
 
                 <!-- Reports Tab -->
-                <TabItem Header="التقارير">
+                <TabItem Header="الوصفات">
                     <Grid x:Name="pesgrid" Background="White">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="100"/>
@@ -935,20 +935,20 @@ HorizontalAlignment="Right" TextAlignment="Right"/>
                 <!-- Billing Tab -->
                 <TabItem Header="الملفات">
                     <Grid Background="White" RenderTransformOrigin="0.897,0.361">
-                        <Viewbox Height="502" Stretch="Fill" Width="825" HorizontalAlignment="Right" VerticalAlignment="Top" RenderTransformOrigin="0.63,0.557">
+                        <Viewbox Height="724" Stretch="Fill" Width="1109" VerticalAlignment="Top" RenderTransformOrigin="0.63,0.557">
                             <Grid Height="551" Width="1026.9999999999995" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                                <Image Source="/images/folder.png" Margin="800,25,104,451"/>
-                                <TextBlock Text="الملفات" FontSize="15" TextAlignment="Center" FontWeight="Bold" Margin="809,105,119,426"/>
-                                <Button Content="Back" Click="BackButton_Click" Margin="824,487,26,18" x:Name="BackButton"/>
+                                <Image Source="/images/folder.png" Margin="17,25,132,465"/>
+                                <TextBlock Text="الملفات" FontSize="15" TextAlignment="Center" FontWeight="Bold" Margin="10,105,119,426"/>
+                                <Button Content="Back" Click="BackButton_Click" Margin="824,487,59,18" x:Name="BackButton"/>
                                 <StackPanel>
 
                                     <ListView 
                         x:Name="FilesListView_File" 
-                        Margin="730,134,27,10" 
+                        Margin="0,134,27,10" 
                         FontSize="20" 
                         MouseDoubleClick="FilesListView_MouseDoubleClick"
                                         d:ItemsSource="{d:SampleData ItemCount=5}"
-                                        Height="346" RenderTransformOrigin="0.502,0.355">
+                                        Height="335" RenderTransformOrigin="0.502,0.355" Width="966" HorizontalAlignment="Left">
                                         <ListView.View>
                                             <GridView>
                                                 <GridViewColumn Header="File Name" DisplayMemberBinding="{Binding FileName}"  Width="270"/>
@@ -1546,7 +1546,8 @@ HorizontalAlignment="Right" TextAlignment="Right"/>
                         </Grid>
                     </Grid>
                 </TabItem>
-                <TabItem Header="النظارات">
+
+                <TabItem Header="شهادة">
                     <Grid x:Name="pesgrid_Copy" Background="White">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="100"/>
@@ -1562,7 +1563,7 @@ HorizontalAlignment="Right" TextAlignment="Right"/>
 
                         <Viewbox Stretch="Fill" Margin="39,27,10,10" Grid.Row="1">
                             <Border Height="877" Width="769" Background="#FFBBBBBB" >
-                                <Grid x:Name="pespgrid1" Margin="2,1,2,0">
+                                <Grid x:Name="certagrid" Margin="2,1,2,0">
                                     <StackPanel x:Name="mystack_certaficate" Background="White" RenderTransformOrigin="0.5,0.5" Height="872" Width="768" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0">
                                         <StackPanel.RenderTransform>
                                             <TransformGroup>
@@ -1572,22 +1573,29 @@ HorizontalAlignment="Right" TextAlignment="Right"/>
                                                 <TranslateTransform Y="-0.996"/>
                                             </TransformGroup>
                                         </StackPanel.RenderTransform>
-                                        <StackPanel Orientation="Vertical" Height="58"/>
-                                        <StackPanel x:Name="header1" Height="141" Width="712" HorizontalAlignment="Right" Margin="0,0,10,0">
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,50,10">
-                                                <TextBlock x:Name="datecertificate" TextWrapping="Wrap" Width="298" TextAlignment="Right" Height="26" Margin="0,0,10,0"/>
-                                                <TextBlock x:Name="datepescriptionlabel_Copy1" TextWrapping="Wrap" Width="88" TextAlignment="Right" Height="26" Text=": الوادي يوم" FontSize="16" FontWeight="Bold"/>
+                                        <StackPanel x:Name="bighead" Orientation="Vertical" Height="152">
+                                            <StackPanel x:Name="logo" Height="56">
+                                                <TextBlock TextWrapping="Wrap" Text="عيادة قية لجراحة العيون" Height="43" FontSize="24" TextAlignment="Center" FontWeight="Bold" Margin="0,5,0,0"/>
                                             </StackPanel>
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10" Height="106">
-                                                <TextBlock x:Name="patientagecertaficate" TextWrapping="Wrap" Width="65" TextAlignment="Right" Height="26"/>
-                                                <TextBlock x:Name="patientnamecertaficate" TextWrapping="Wrap" Width="115" TextAlignment="Right" Height="26" Margin="0,0,10,0"/>
-                                                <StackPanel Orientation="Vertical" Width="135" Height="90">
-                                                    <Image x:Name="barcodecertaficate" Height="75" Width="115" Stretch="Fill"/>
-                                                </StackPanel>
+                                            <StackPanel x:Name="infos" Height="63" Orientation="Horizontal" HorizontalAlignment="Center" Width="414">
+                                                <TextBlock TextWrapping="Wrap" Text="العنوان : طريق الخير 45" Height="28" TextAlignment="Center" FontWeight="Bold" Margin="0,5,0,0" Width="200"/>
+                                                <TextBlock TextWrapping="Wrap" Text="رقم الهاتف : 023658552365" Height="24" TextAlignment="Center" FontWeight="Bold" Width="212"/>
                                             </StackPanel>
                                         </StackPanel>
-                                        <TextBlock TextWrapping="Wrap" Width="627" FontSize="16" TextAlignment="Center" Height="26" Text="شهادة :" FontWeight="Bold" TextDecorations="Underline"/>
-                                        <StackPanel x:Name="certaficatecontent" Height="637" FlowDirection="RightToLeft" Margin="20,0,20,0"/>
+                                        <StackPanel x:Name="header1" Height="102" Width="712" HorizontalAlignment="Right" Margin="0,0,10,0">
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,50,10" Width="656">
+                                                <TextBlock x:Name="datepescriptionlabel_Copy1" TextWrapping="Wrap" Width="52" Height="26" Text="Date :" FontSize="16" FontWeight="Bold"/>
+                                                <TextBlock x:Name="datecertificate" TextWrapping="Wrap" Width="334" Height="26" Margin="0,0,10,0" FontStyle="Italic" FontSize="16"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10" Height="63" Width="710">
+                                                <StackPanel Orientation="Vertical" Width="86" Height="53">
+                                                    <Image x:Name="barcodecertaficate" Height="56" Width="87" Stretch="Fill"/>
+                                                </StackPanel>
+                                                <TextBlock x:Name="patientnamecertaficate" TextWrapping="Wrap" Width="125" Height="26" Margin="0,0,10,0" FontWeight="Bold"/>
+                                                <TextBlock x:Name="patientagecertaficate" TextWrapping="Wrap" Width="65" Height="26" FontWeight="Bold"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <StackPanel x:Name="certaficatecontent" Height="591" Margin="50,20,0,0" Width="676" Background="White"/>
                                     </StackPanel>
 
                                 </Grid>
@@ -1665,46 +1673,21 @@ HorizontalAlignment="Right" TextAlignment="Right"/>
 
                                                         </Button>
 
-                                                        <Button Style="{StaticResource formatImageStyle}" Command="EditingCommands.ToggleBullets" ToolTip="Bullets" Width="65" HorizontalAlignment="Center">
-                                                            <Image Height="25" Width="25" />
-
-                                                        </Button>
-                                                        <Button Style="{StaticResource formatImageStyle}" Command="EditingCommands.ToggleNumbering" ToolTip="Numbering" Width="45" HorizontalAlignment="Center">
-                                                            <Image Height="25" Width="25"/>
-
-                                                        </Button>
-                                                        <Button Style="{StaticResource formatImageStyle}" Command="EditingCommands.AlignLeft" ToolTip="Align Left" Width="60" HorizontalAlignment="Center">
-                                                            <Image Height="25" Width="25" />
-
-                                                        </Button>
-                                                        <Button Style="{StaticResource formatImageStyle}" Command="EditingCommands.AlignCenter" ToolTip="Align Center" Width="50" HorizontalAlignment="Center">
-                                                            <Image Height="25" Width="25" />
-
-                                                        </Button>
-                                                        <Button Style="{StaticResource formatImageStyle}" Command="EditingCommands.AlignRight" ToolTip="Align Right" Width="50" HorizontalAlignment="Center">
-                                                            <Image Height="25" Width="25" />
-
-                                                        </Button>
-                                                        <Button Style="{StaticResource formatImageStyle}" Command="EditingCommands.AlignJustify" ToolTip="Align Justify" Width="55" HorizontalAlignment="Center">
-                                                            <Image Height="25" Width="25"  HorizontalAlignment="Center"/>
-
-                                                        </Button>
-
                                                     </ToolBar>
 
                                                     <!-- By default pressing tab moves focus to the next control. Setting AcceptsTab to true allows the 
            RichTextBox to accept tab characters. -->
-                                                    <RichTextBox x:Name="certaficateText" AcceptsTab="True" Height="908" FlowDirection="RightToLeft"></RichTextBox>
+                                                    <RichTextBox x:Name="certaficateText" AcceptsTab="True" Height="908"/>
                                                 </DockPanel>
                                             </Grid>
 
                                             <WrapPanel
 
-                                                Margin="0,10,0,0" Orientation="Horizontal" Width="538">
+                                                Margin="0,10,0,0" Orientation="Horizontal" Width="343">
 
                                                 <Button
 
-                                                    Width="168" Margin="20,0,0,0" Height="46" HorizontalAlignment="Center" FontSize="16" Foreground="White" Click="Addcertaficate" Background="#0078D7">
+                                                    Width="300" Margin="20,0,0,0" Height="46" HorizontalAlignment="Center" FontSize="16" Foreground="White" Click="Addcertaficate" Background="#0078D7" VerticalAlignment="Center">
 
                                                     <Button.Template
 
@@ -1740,82 +1723,6 @@ HorizontalAlignment="Right" TextAlignment="Right"/>
 
                                                 </Button>
 
-                                                <Button
-
-                                                    Width="165" Margin="10,0,0,0" Height="47" HorizontalAlignment="Center" FontSize="16" Foreground="White" Click="DeleteSession_Click" Background="#FFD73B00">
-
-                                                    <Button.Template
-
-                            >
-
-                                                        <ControlTemplate
-
-                                                            TargetType="{x:Type Button}">
-
-                                                            <Border
-
-                                                                CornerRadius="10" BorderThickness="1" BorderBrush="#0078D7" Background="{TemplateBinding Background}">
-
-                                                                <ContentPresenter
-
-                                                                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-                                                            </Border>
-
-                                                        </ControlTemplate>
-
-                                                    </Button.Template>
-
-                                                    <StackPanel
-
-                                                        HorizontalAlignment="Right" Orientation="Horizontal">
-
-                                                        <TextBlock
-
-                                                            Margin="0,0,10,0" Text="حذف" VerticalAlignment="Center"/>
-
-                                                    </StackPanel>
-
-                                                </Button>
-
-                                                <Button
-
-                                                    Width="155" Margin="10,0,0,0" Height="46" HorizontalAlignment="Center" FontSize="16" Foreground="White" Click="UpdateSession_Click" Background="#FF00D7D2">
-
-                                                    <Button.Template
-
-                            >
-
-                                                        <ControlTemplate
-
-                                                            TargetType="{x:Type Button}">
-
-                                                            <Border
-
-                                                                CornerRadius="10" BorderThickness="1" BorderBrush="#0078D7" Background="{TemplateBinding Background}">
-
-                                                                <ContentPresenter
-
-                                                                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-                                                            </Border>
-
-                                                        </ControlTemplate>
-
-                                                    </Button.Template>
-
-                                                    <StackPanel
-
-                                                        HorizontalAlignment="Right" Orientation="Horizontal">
-
-                                                        <TextBlock
-
-                                                            Margin="0,0,10,0" Text="تعديل" VerticalAlignment="Center"/>
-
-                                                    </StackPanel>
-
-                                                </Button>
-
                                             </WrapPanel>
 
                                         </StackPanel>
@@ -1834,33 +1741,9 @@ HorizontalAlignment="Right" TextAlignment="Right"/>
                         <StackPanel Background="#FFDEDEDE" Margin="39,261,72,6">
                             <TextBox TextWrapping="Wrap" Text="بحث .." Width="366" Height="30" TextAlignment="Center" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_TextChanged"/>
                         </StackPanel>
-                        <Viewbox Margin="0,50,0,16" HorizontalAlignment="Center" Stretch="Fill" Width="406">
+                        <Viewbox Margin="0,50,0,16" HorizontalAlignment="Center" Stretch="Fill" Width="150">
                             <WrapPanel Orientation="Horizontal">
-                                <Button Height="47" Background="#FFD73B00" Foreground="White" FontSize="16" Width="165"  HorizontalAlignment="Center" Margin="10,0,0,0" Click="startOver_Click" >
-                                    <Button.Template>
-                                        <ControlTemplate TargetType="{x:Type Button}">
-                                            <Border Background="{TemplateBinding Background}" BorderThickness="1" CornerRadius="10">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Button.Template>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <TextBlock Text="إالغاء" Margin="0,0,10,0" VerticalAlignment="Center" FontWeight="Bold" FontSize="18"/>
-                                        <Image Height="35" Width="37" RenderTransformOrigin="0.5,0.5" Source="/paper.png">
-                                            <Image.RenderTransform>
-                                                <TransformGroup>
-                                                    <ScaleTransform/>
-                                                    <SkewTransform/>
-                                                    <RotateTransform Angle="0"/>
-                                                    <TranslateTransform/>
-                                                </TransformGroup>
-                                            </Image.RenderTransform>
-                                        </Image>
-
-                                    </StackPanel>
-                                </Button>
-
-                                <Button Height="46" Background="#FF00D7D2" Foreground="White" FontSize="16" Width="155" HorizontalAlignment="Center"  Click="startOver_Click" Margin="10,0,0,0" >
+                                <Button Height="46" Background="#0078D7" Foreground="White" FontSize="16" Width="211"  Click="Savecertaficate" HorizontalAlignment="Center" >
                                     <Button.Template>
                                         <ControlTemplate TargetType="{x:Type Button}">
                                             <Border Background="{TemplateBinding Background}"  BorderThickness="1" CornerRadius="10">
@@ -1869,40 +1752,7 @@ HorizontalAlignment="Right" TextAlignment="Right"/>
                                         </ControlTemplate>
                                     </Button.Template>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <TextBlock Text="طباعة" Margin="0,0,10,0" VerticalAlignment="Center" FontWeight="Bold" FontSize="18"/>
-                                        <Image Height="35" Width="39" RenderTransformOrigin="0.5,0.5" Source="/time.png">
-                                            <Image.RenderTransform>
-                                                <TransformGroup>
-                                                    <ScaleTransform/>
-                                                    <SkewTransform/>
-                                                    <RotateTransform Angle="0"/>
-                                                    <TranslateTransform/>
-                                                </TransformGroup>
-                                            </Image.RenderTransform>
-                                        </Image>
-
-                                    </StackPanel>
-                                </Button>
-                                <Button Height="46" Background="#0078D7" Foreground="White" FontSize="16" Width="168"  Click="Savepescription" Margin="20,0,0,0" HorizontalAlignment="Center" >
-                                    <Button.Template>
-                                        <ControlTemplate TargetType="{x:Type Button}">
-                                            <Border Background="{TemplateBinding Background}"  BorderThickness="1" CornerRadius="10">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Button.Template>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <TextBlock Text="حفظ" Margin="0,0,10,0" VerticalAlignment="Center" FontWeight="Bold" FontSize="18"/>
-                                        <Image Height="35" Width="37" RenderTransformOrigin="0.5,0.5" Source="/sunglasses.png" >
-                                            <Image.RenderTransform>
-                                                <TransformGroup>
-                                                    <ScaleTransform/>
-                                                    <SkewTransform/>
-                                                    <RotateTransform Angle="0"/>
-                                                    <TranslateTransform/>
-                                                </TransformGroup>
-                                            </Image.RenderTransform>
-                                        </Image>
+                                        <TextBlock Text="حفظ" Margin="0,0,10,0" VerticalAlignment="Center" FontWeight="Bold" FontSize="18" Width="184" TextAlignment="Center"/>
                                     </StackPanel>
                                 </Button>
 

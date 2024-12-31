@@ -24,11 +24,11 @@
                 </Viewbox>
                 <StackPanel Orientation="Horizontal" Height="19">
                     <Image Height="12" Width="17" Source="images/icons8-phone-24.png" Margin="0,0,5,0" Opacity="0.5"/>
-                    <TextBlock x:Name="phonef" TextWrapping="Wrap" Text="TextBlock" Height="17" Width="88" FontWeight="Bold" Foreground="#FFABABAB"/>
+                    <TextBlock x:Name="phonef" TextWrapping="Wrap" Text="TextBlock" Height="17" Width="88" FontWeight="Bold" Foreground="#FFABABAB" FontSize="10"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Height="17">
                     <Image Height="13" Width="17" Source="images/icons8-address-24.png" Margin="0,0,5,0" Opacity="0.495"/>
-                    <TextBlock x:Name="address" TextWrapping="Wrap" Text="TextBlock" Height="14" Width="107" Foreground="#FFA0A0A0"/>
+                    <TextBlock x:Name="address" TextWrapping="Wrap" Text="TextBlock" Height="16" Width="107" Foreground="#FFA0A0A0" FontSize="10"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel VerticalAlignment="Center" Width="126" Height="46">
