@@ -34,7 +34,7 @@ namespace Medical
         private readonly Med_ViewModel   med_viewModel;
         private readonly AppointmenViewModel appo_viewmodel;
         private readonly Exm_ViewModel exm_viewModel;
-        private readonly string PatientFilesRoot = @"D:\c# project\Medical\Medical\patient_files";
+        private readonly string PatientFilesRoot = @"C:\\Program Files\\Medecal\\patient_files";
         private Stack<string> navigationHistory = new Stack<string>();
         IdGenerator gen = new IdGenerator();
 
@@ -331,8 +331,8 @@ namespace Medical
             if (openFileDialog.ShowDialog() == true)
             {
                 // Get the project directory's root (relative to the .exe startup location)
-                string projectDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../");
-                string patientFilesFolder = System.IO.Path.Combine(projectDirectory, "patient_files");
+                string projectDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "C:\\Program Files\\Medecal\\patient_files");
+                string patientFilesFolder = System.IO.Path.Combine(projectDirectory, "C:\\Program Files\\Medecal\\patient_files");
 
                 // Ensure the "patient_files" folder exists
                 if (!System.IO.Directory.Exists(patientFilesFolder))
@@ -1181,7 +1181,8 @@ namespace Medical
             int randomId = random.Next(1000, 9999);
 
             // Construct the folder path
-            string baseFolder = "D:\\c# project\\Medical\\Medical\\patient_files";
+            //string baseFolder = "D:\\c# project\\Medical\\Medical\\patient_files";
+            string baseFolder = "C:\\Program Files\\Medecal\\patient_files";
             string patientFolderName = $"{patientname.Text}_وصفات_";
             string patientFolderPath = Path.Combine(baseFolder, patientFolderName);
 
@@ -1398,7 +1399,8 @@ namespace Medical
             }
 
             // Construct the file path dynamically
-            string folderPath = "D:\\c# project\\Medical\\Medical\\patient_files"; // Update to your desired folder path
+            //string folderPath = "D:\\c# project\\Medical\\Medical\\patient_files";
+            string folderPath = "C:\\Program Files\\Medecal\\patient_files";// Update to your desired folder path
             string patientFolderName = $"{patientId}_{patientName}_فحص";
             string patientFolderPath = Path.Combine(folderPath, patientFolderName);
             Directory.CreateDirectory(patientFolderPath); // Create the folder if it doesn't exist
@@ -1629,7 +1631,8 @@ namespace Medical
             string patientId = patientid.Text.Trim();
 
             // Create the directory for patient files
-            string folderPath = Path.Combine("D:\\c# project\\Medical\\Medical\\patient_files", $"{patientName}_شهادة_{patientId}");
+            //string folderPath = Path.Combine("D:\\c# project\\Medical\\Medical\\patient_files", $"{patientName}_شهادة_{patientId}");
+            string folderPath = Path.Combine("C:\\Program Files\\Medecal\\patient_files", $"{patientName}_شهادة_{patientId}");
             if (!Directory.Exists(folderPath))
             {
                 Directory.CreateDirectory(folderPath);

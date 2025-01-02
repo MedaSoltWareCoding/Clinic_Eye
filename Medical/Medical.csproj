@@ -97,8 +97,4 @@
     <Resource Include="prescription.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="patient_files\" />
-  </ItemGroup>
-
 </Project>
