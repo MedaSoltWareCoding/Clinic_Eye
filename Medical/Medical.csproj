@@ -19,6 +19,7 @@
     <None Remove="cancel.png" />
     <None Remove="doctor.png" />
     <None Remove="examination.png" />
+    <None Remove="eye.jpg" />
     <None Remove="generate.png" />
     <None Remove="genIds\pescriptions" />
     <None Remove="icons8-address-24.png" />
@@ -80,6 +81,7 @@
     <Resource Include="Approved-stamp-on-transparent-PNG.png" />
     <Resource Include="barcode.png" />
     <Resource Include="cancel.png" />
+    <Resource Include="eye.jpg" />
     <Resource Include="generate.png" />
     <Resource Include="icons8-address-24.png" />
     <Resource Include="icons8-align-center-24.png" />

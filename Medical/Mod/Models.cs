@@ -78,4 +78,30 @@ namespace Medical.Mod
         public required DateTime date { get; set; }
 
     }
+    public class Opiration()
+    {
+        public required int Id { get; set; }
+        public required string title { get; set; }
+        public required string description { get; set; }
+        public required double price { get; set; }
+    }
+    public class Bill()
+    {
+        public required int Id { get; set; }
+        public required DateTime date { get; set; }
+        public required Patient patient { get; set; }
+        public required List<Opiration> opirations { get; set; }
+
+        public double totalPrice()
+        {
+            double total = 0;
+
+            foreach(var op in opirations)
+            {
+                total += op.price;
+            }
+            return total;
+        }
+    }
+
 }

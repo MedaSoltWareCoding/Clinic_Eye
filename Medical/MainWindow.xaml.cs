@@ -27,10 +27,12 @@ namespace Medical
         public Pescription pescription = null;
         public Certaficate certaficate = null;
         public Appointment? selected = null;
+        public Bill bill = null;
         private readonly Patient_ViewModel pat_viewModel;
         private readonly Doctor_ViewModel  doc_viewModel;
         private readonly Med_ViewModel   med_viewModel;
         private readonly AppointmenViewModel appo_viewmodel;
+        private readonly Opiration_ViewModels opiration_viewModel;
         IdGenerator gen = new IdGenerator();
 
 
@@ -51,6 +53,7 @@ namespace Medical
             doc_viewModel = new Doctor_ViewModel();
             med_viewModel = new Med_ViewModel();
             appo_viewmodel = new AppointmenViewModel();
+            opiration_viewModel = new Opiration_ViewModels();
 
 
             PatientsDataGrid.DataContext = pat_viewModel;
@@ -69,6 +72,7 @@ namespace Medical
             pat_viewModel.LoadPatients();
             doc_viewModel.LoadDoctors();
             LoadAppointments1();
+            opiration_viewModel.LoadOpirations();
            // appointmentsDataGrid.IsReadOnly = true;
 
             //Pescription containers load| ----------------------------- >
@@ -83,6 +87,13 @@ namespace Medical
             //certificate load --------------------------------->
             patientcertaficatesComboBox.DataContext = pat_viewModel;
             patientcertaficatesComboBox.SelectedIndex = 0;
+
+            //Opiration load --------------------------------->
+            patientBillComboBox.DataContext = pat_viewModel;
+            patientBillComboBox .SelectedIndex = 0;
+            opirationList.DataContext = opiration_viewModel;
+            opirationList.SelectedIndex = 0;
+        
         }
         public void MouseClick(Appointment app)
         {
@@ -825,7 +836,6 @@ namespace Medical
             PdfDocument pdfDocument = new PdfDocument();
             PdfPage page = pdfDocument.AddPage();
             XGraphics gfx = XGraphics.FromPdfPage(page);
-
             // Capture the visual content of a WPF control (e.g., a Grid or Canvas)
             RenderTargetBitmap rtb = new RenderTargetBitmap((int)grido.ActualWidth, (int)grido.ActualHeight, 96 ,96, PixelFormats.Pbgra32);
             //MessageBox.Show(rtb.Width + "," + rtb.Height, "Success", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -881,9 +891,7 @@ namespace Medical
                 pescriptioncontent.Children.Add(row);
                 pescriptionDesc.Text = "";
             }
-
             // Create source
-
         }
 
 
@@ -938,7 +946,6 @@ namespace Medical
             {
                 MessageBox.Show("انشئ وصفة من فضلك", "Error", MessageBoxButton.OK);
             }
-
         }
 
         private void Addcertaficate(object sender, RoutedEventArgs e)
@@ -999,7 +1006,6 @@ namespace Medical
                         
                     }
                 }
-       
             }
             catch (Exception ex)
             {
@@ -1018,7 +1024,154 @@ namespace Medical
                 datecertificate.Text = "";
                 barcodecertaficate.Source = null;
             }
+        }
+        private void addOpiration_Click(object sender, RoutedEventArgs e)
+        {
+            Opiration opiration = new Opiration
+            {
+                Id = 0 ,
+                title = opirationName.Text,
+                description = opirationDesc.Text,
+                price = double.Parse(opirationPrice.Text),
+            };
+            try
+            {
+                opiration_viewModel.AddOpiration(opiration);
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
+        private void DeleteOpiration_Click(object sender, RoutedEventArgs e)
+        {
+            if (opirationList.SelectedValue != null) {
+                opiration_viewModel.DeleteOpiration((Opiration)opirationList.SelectedValue);
+            }
+        }
+
+        private void UpdateOpiration_Click(object sender, RoutedEventArgs e)
+        {
+            if (opirationList.SelectedValue != null)
+            {
+                Opiration opiration = (Opiration)opirationList.SelectedValue;
+                opiration.title = opirationName.Text;
+                opiration.price = double.Parse(opirationPrice.Text);
+                opiration.description = opirationDesc.Text;
+                opiration_viewModel.UpdateOpiration(opiration);
+            }
+        }
+
+        private void selectedOpiration_Mouse(object sender, RoutedEventArgs e)
+        {
+            if (opirationList.SelectedValue != null)
+            {
+                Opiration opiration = (Opiration)opirationList.SelectedValue;
+                opirationName.Text = opiration.title;
+                opirationPrice.Text = opiration.price+"";
+                opirationDesc.Text = opiration.description;
+            }
+        }
+
+        public void updateTheBillPage()
+        {
+
+            billcontent.Children.Clear();
+            foreach (Opiration item in bill.opirations)
+            {
+                StackPanel row = new StackPanel();
+                row.Margin = new Thickness(15, 15, 15, 15);
+                row.HorizontalAlignment = HorizontalAlignment.Center;
+                row.Height = 20;
+                row.Orientation = System.Windows.Controls.Orientation.Horizontal;
+                TextBlock opName = new TextBlock();
+                opName.Width = 300;
+                opName.Text = item.title;
+                TextBlock opPrice = new TextBlock();
+                opPrice.Width = 100;
+                opPrice.Text = item.price+" DA ";
+  
+                row.Children.Add(opName);
+                row.Children.Add(opPrice);
+                billcontent.Children.Add(row);
+
+            }
+            totalbill.Text = bill.totalPrice()+" DA";
+            // Create source
+        }
+
+        private void AddOPirationToBill(object sender, RoutedEventArgs e)
+        {
+            if (bill == null)
+            {
+                bill = new Bill
+                {
+                    Id = gen.generateid("bills"),
+                    date = DateTime.Now,
+                    patient = (Patient)patientBillComboBox.SelectedValue,
+                    opirations = new List<Opiration>()
+                };
+                try
+                {
+                    barcodebill.Source = gen.GenerateQRCode(bill.Id.ToString("D14"));
+                    patientnamebill.Text = bill.patient.ToString();
+                    datebill.Text = bill.date.ToString("");
+                    bill.opirations.Add((Opiration)opirationList.SelectedValue);
+                    updateTheBillPage();
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK);
+                }
+            }
+            else
+            {
+                if (!bill.opirations.Contains((Opiration)opirationList.SelectedValue))
+                {
+                    bill.opirations.Add((Opiration)opirationList.SelectedValue);
+                    updateTheBillPage();
+                }
+                else 
+                {
+                    MessageBox.Show("العملية موجودة بالفعل في الفاتورة", "Error", MessageBoxButton.OK);
+                }
+            
+
+            }
+
+
+        }
+
+        private void SaveBill(object sender, RoutedEventArgs e)
+        {
+            if (bill != null)
+            {
+                try { 
+                    new Data_Bill("localhost", "clinics", "root", "").AddBill(bill);
+                    ConvertToPdf(billGride, "bill.pdf");
+                    bill = null;
+                    billcontent.Children.Clear();
+                    datebill.Text = "";
+                    patientnamebill.Text = "";
+                    totalbill.Text = "";
+                    barcodebill.Source = null;
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK);
+                }
+            }
+
+        }
+
+        private void removeFromBill(object sender, RoutedEventArgs e)
+        {
+            if (bill != null)
+            {
+                bill.opirations.Remove((Opiration)opirationList.SelectedValue);
+                updateTheBillPage() ;
+            }
         }
     }
 }

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Medical"
-             mc:Ignorable="d" Margin="0,5,20,5" Background="White" Width="606" Height="85" VerticalAlignment="Top" BorderBrush="Black" HorizontalAlignment="Right">
+             mc:Ignorable="d" Margin="0,5,20,5" Background="White" VerticalAlignment="Top" BorderBrush="Black" HorizontalAlignment="Right">
     <Viewbox HorizontalAlignment="Center" Stretch="Fill" Width="606" VerticalAlignment="Center" Height="106" >
         <StackPanel Name="grido" Background="White" MouseLeftButtonUp="messageshow"  MouseEnter="HoverPanel_MouseEnter" MouseLeave="HoverPanel_MouseLeave" Orientation="Horizontal" FlowDirection="RightToLeft" Height="118" Width="634" HorizontalAlignment="Left" VerticalAlignment="Center" >
             <StackPanel x:Name="tail" Width="14" Background="#FF0079EA"/>

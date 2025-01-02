@@ -65,8 +65,6 @@ namespace Medical.View
             }
         }
 
-
-
         public void DeleteMedecine(Medecine medecine)
         {
             if (medecine == null)
@@ -85,7 +83,6 @@ namespace Medical.View
                 throw new Exception("Error deleting Medecine: " + ex.Message, ex);
             }
         }
-
 
         public void UpdateMedecinet(Medecine updatemedicent)
         {
@@ -108,37 +105,11 @@ namespace Medical.View
 
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-
-
-
-
-
-
     }
 }
